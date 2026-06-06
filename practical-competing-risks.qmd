@@ -1,0 +1,45 @@
+---
+format:
+  revealjs:
+    slide-number: true
+    show-slide-number: print
+    theme: "bea_slide_theme.scss"
+    menu:
+      side: right
+      width: wide
+---
+
+##  {#title-slide data-menu-title="Title Slide" background="#9FB2AC"}
+
+[Practical methods for competing
+risks data]{.custom-title}
+
+[*A review*]{.custom-subtitle}
+
+<hr style="border: 1px solid #5D0D18;">
+
+::::: columns
+::: {.column width="50%"}
+[Beatriz Lima Silveira]{.custom-subtitle3}<br>
+[Felipe Ramos]{.custom-subtitle3}<br>
+:::
+
+::: {.column width="50%"}
+[Universidade Federal de Minas Gerais]{.custom-subtitle3} <br>
+:::
+:::::
+
+::: title-footer
+Slides disponíveis em [GitHub](https://github.com/beatriz-ls/minicurso_introducao_inferencia_causal_rladies){.cover-link}
+:::
+
+<br>
+
+------------------------------------------------------------------------
+
+{{< include sections/1_topicos.qmd >}}
+
+------------------------------------------------------------------------
+
+{{< include sections/2_introducao.qmd >}}
+

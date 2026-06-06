@@ -1,0 +1,469 @@
+/*-- scss:defaults --*/
+
+// =============================
+// IMPORTAÇÃO DE FONTES
+// =============================
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@300;800&family=Roboto+Mono:wght@300;400&family=Sanchez&display=swap');
+
+// =============================
+// FONTES
+// =============================
+
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-serif: 'Sanchez', serif;
+$font-family-monospace: 'Roboto Mono', monospace;
+
+// =============================
+// PALETA DE CORES
+// =============================
+
+$cream: #FFF9EB;
+$sage: #9FB2AC;
+$wine: #5D0D18;
+
+// aliases semânticos
+$primary: $wine;
+$secondary: $sage;
+$background: $cream;
+
+// =============================
+// CONFIGURAÇÕES GERAIS
+// =============================
+
+$body-bg: $background;
+$body-color: $primary;
+
+$link-color: $primary;
+
+$code-color: $primary;
+$code-bg: rgba(159, 178, 172, 0.12);
+
+$code-block-bg: rgba(159, 178, 172, 0.10);
+$code-block-font-size: 0.8em;
+
+$presentation-font-size-root: 25px;
+
+
+/*-- scss:rules --*/
+
+// =============================
+// BODY
+// =============================
+
+body {
+  line-height: 1.5;
+}
+
+// =============================
+// TEXTO EM NEGRITO
+// =============================
+
+strong, b {
+  font-weight: 900;
+}
+
+// =============================
+// TABELAS
+// =============================
+
+th {
+  font-size: 30px;
+}
+
+td {
+  font-size: 20px;
+}
+
+// =============================
+// LINHAS HORIZONTAIS
+// =============================
+
+hr {
+  border: 4px solid $wine;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.hr-wine {
+  border: 0;
+  height: 4px;
+  background-color: $wine;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.hr-sage {
+  border: 0;
+  height: 4px;
+  background-color: $sage;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+// =============================
+// TÍTULOS DA CAPA
+// =============================
+
+.custom-title {
+  font-family: $font-family-serif;
+  color: $cream;
+  font-size: 3.2em;
+  line-height: 1.1;
+  max-width: 80%;
+}
+
+.custom-subtitle {
+  font-family: $font-family-sans-serif;
+  color: $cream;
+  font-size: 2em;
+}
+
+.custom-subtitle2 {
+  font-family: $font-family-serif;
+  color: $sage;
+  font-size: 1.3em;
+}
+
+.custom-subtitle3 {
+  font-family: $font-family-sans-serif;
+  color: $cream;
+  font-size: 1em;
+}
+
+// =============================
+// FOOTER
+// =============================
+
+.title-footer {
+  text-align: center !important;
+  color: $cream;
+  font-size: 0.8em !important;
+}
+
+.title-footer a:hover {
+  color: $sage !important;
+  text-decoration: underline;
+}
+
+.reveal .slides .title-footer,
+.reveal .slides .title-footer a {
+  color: $cream !important;
+}
+
+.reveal .slides .title-footer a {
+  color: $sage !important;
+  text-decoration: none !important;
+}
+
+.reveal .slides .title-footer a:hover {
+  color: $sage !important;
+  text-decoration: underline !important;
+}
+
+// =============================
+// TÍTULOS DOS SLIDES
+// =============================
+
+.slide-title-xl,
+.slide-title,
+.slide-title2,
+.slide-title3 {
+  font-family: $font-family-serif;
+  color: $wine;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.slide-title-xl {
+  font-size: 3em;
+}
+
+.slide-title {
+  font-size: 2em;
+}
+
+.slide-title2 {
+  font-size: 1.7em;
+}
+
+.slide-title3 {
+  font-size: 1.5em;
+}
+
+// =============================
+// ÍCONES
+// =============================
+
+.large-fa-icon {
+  font-size: 2.5em;
+}
+
+// =============================
+// SLIDE COLORIDO FULLSCREEN
+// =============================
+
+.fullscreen-colored {
+  background-color: $wine !important;
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 0;
+  margin: 0;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fullscreen-colored h1,
+.fullscreen-colored h2,
+.fullscreen-colored h3,
+.fullscreen-colored p {
+  margin: 0;
+  font-size: 2.3em;
+  font-family: $font-family-serif;
+  color: $cream;
+}
+
+// =============================
+// TAMANHOS DE TEXTO
+// =============================
+
+.body-text-xl {
+  font-family: $font-family-sans-serif;
+  font-size: 2em;
+}
+
+.body-text-l {
+  font-size: 1.5em;
+  line-height: 1.7;
+  margin-bottom: 1em;
+}
+
+.body-text-m {
+  font-size: 1em;
+  line-height: 1.4;
+  margin-bottom: 1em;
+}
+
+.body-text-s {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.body-text-xs {
+  font-size: 0.5em;
+  line-height: 1.6;
+}
+
+// =============================
+// HELPERS DE FONTE
+// =============================
+
+.sanchez-font {
+  font-family: $font-family-serif;
+}
+
+// =============================
+// HELPERS DE COR
+// =============================
+
+.cream-text {
+  color: $cream;
+}
+
+.wine-text {
+  color: $wine;
+}
+
+.sage-text {
+  color: $sage;
+}
+
+// =============================
+// DESTAQUES
+// =============================
+
+.bg-highlight {
+  background-color: rgba(159, 178, 172, 0.25);
+  padding: 5px 10px;
+  border-radius: 18px;
+}
+
+.wine-underline {
+  text-decoration: underline $wine;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 4px;
+}
+
+.cover-link {
+  color: #5D0D18  !important;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.cover-link:hover {
+  color: #5D0D18 !important;
+  text-decoration: underline;
+}
+
+// =============================
+// CALLOUT
+// =============================
+
+.callout-important {
+  background-color: rgba(159, 178, 172, 0.10);
+  border-left: 5px solid $wine;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+// =============================
+// BLOCKQUOTE
+// =============================
+
+.reveal blockquote {
+  border-left: 5px solid $sage;
+  padding-left: 20px;
+  font-style: italic;
+  color: $wine;
+  background: transparent;
+  box-shadow: none;
+}
+
+// =============================
+// ALINHAMENTO
+// =============================
+
+.center-text {
+  text-align: center;
+}
+
+.right-align-text {
+  text-align: right;
+}
+
+.left-align-text {
+  text-align: left;
+}
+
+// =============================
+// ALINHAMENTO VERTICAL
+// =============================
+
+.vertical-center {
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.page-center {
+  line-height: 700px;
+  text-align: center;
+}
+
+// =============================
+// ESPAÇAMENTOS
+// =============================
+
+.topbr {
+  display: block;
+  margin-top: 1em;
+}
+
+.bottombr {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.br-smaller {
+  line-height: 6px;
+}
+
+// =============================
+// TABS
+// =============================
+
+.panel-tabset {
+  font-size: 25px;
+}
+
+// =============================
+// CODE CHUNKS
+// =============================
+
+.sourceCode {
+  font-size: 1rem;
+}
+
+pre.sourceCode {
+  font-size: 12px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+// =============================
+// NÚMERO DOS SLIDES
+// =============================
+
+.reveal .slide-number {
+  color: $sage;
+  font-size: 0.6em;
+}
+
+// =============================
+// LINKS
+// =============================
+
+a {
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: $sage;
+}
+
+// =============================
+// LISTAS
+// =============================
+
+.reveal ul li,
+.reveal ol li {
+  margin-bottom: 0.4em;
+}
+
+// =============================
+// IMAGENS
+// =============================
+
+.reveal img {
+  border-radius: 12px;
+}
+
+// =============================
+// EQUAÇÕES
+// =============================
+
+.MathJax {
+  font-size: 110% !important;
+}
+
+.reveal .slides .title-footer a.cover-link {
+  color: #5D0D18 !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.reveal .slides .title-footer a.cover-link:hover {
+  color: #5D0D18 !important;
+  text-decoration: underline !important;
+}
