@@ -21,7 +21,7 @@ risks data]{.custom-title}
 ::::: columns
 ::: {.column width="50%"}
 [Beatriz Lima Silveira]{.custom-subtitle3}<br>
-[Felipe Ramos]{.custom-subtitle3}<br>
+[Felipe Mancini Ramos]{.custom-subtitle3}<br>
 :::
 
 ::: {.column width="50%"}
@@ -30,7 +30,7 @@ risks data]{.custom-title}
 :::::
 
 ::: title-footer
-Slides disponíveis em [GitHub](https://github.com/beatriz-ls/minicurso_introducao_inferencia_causal_rladies){.cover-link}
+Slides disponíveis em [GitHub](https://github.com/beatriz-ls/practical-competing-risks){.cover-link}
 :::
 
 <br>
