@@ -1,5 +1,143 @@
 ---
-title: "4_teoria_hazard_cif"
-format: html
+format: 
+  revealjs:
+    slide-number: true
+    code-link: true
+    highlight-style: a11y
+    chalkboard: true
+    # self-contained: true
+    # scrollable: true
+    theme: "bea_slide_theme.scss"
 ---
 
+## {#cause-specific-hazard data-menu-title="Cause-Specific Hazard"}
+
+[Cause-especific Hazard]{.slide-title}
+
+<hr>
+
+Na abordagem moderna de riscos competitivos, o interesse concentra-se em quantidades diretamente observáveis: o tempo até a ocorrência do evento (T) e a causa associada (C).
+
+O **risco específico por causa** para a causa (j) é definido como a taxa instantânea de ocorrência dessa causa entre os indivíduos que ainda não apresentaram nenhum evento:
+
+$$
+\lambda_j(t) =  \lim_{h \to 0} \frac{P(t \le T < t+h,; C=j \mid T \ge t)}{h}
+$$
+
+O risco total é obtido pela soma dos riscos específicos:
+
+$$
+\lambda(t)=\sum_{j=1}^{k}\lambda_j(t)
+$$
+
+Essa relação decorre da aditividade das probabilidades para eventos mutuamente exclusivos e não requer hipóteses de independência entre os tempos de falha.
+
+## {#cif data-menu-title="Incidência Cumulativa"}
+
+[Cumulative incidence estimation]{.slide-title}
+
+<hr>
+
+::: body-text-s
+
+Em muitos estudos, o interesse está na probabilidade de ocorrência de uma causa específica ao longo do tempo.
+
+A **Função de Incidência Cumulativa (CIF)** para a causa (j) é definida por:
+
+$$
+F_j(t)=P(T \le t,; C=j)
+$$
+
+e representa a probabilidade acumulada de falha pela causa (j) até o tempo (t), considerando explicitamente a presença dos eventos concorrentes.
+
+A CIF pode ser expressa em função dos riscos específicos por causa:
+
+$$
+F_j(t) = \int_0^t \lambda_j(u) \exp\left( -\int_0^u \sum_{c=1}^{k}\lambda_c(w),dw \right) du
+$$
+
+[Principais características]{.sanchez-font}
+
+* Possui interpretação direta como probabilidade;
+* Incorpora a competição entre os diferentes tipos de evento;
+* É a principal ferramenta para descrever a incidência de uma causa específica em estudos com riscos competitivos.
+
+:::
+## {#cif-estimation data-menu-title="Estimando a CIF"}
+
+[Cumulative incidence estimation]{.slide-title}
+
+[Estimando a Cumulative Incidence Function]{.custom-subtitle2}
+
+<hr>
+
+::: body-text-s
+
+A CIF pode ser estimada por um estimador não paramétrico que combina os riscos específicos por causa com a probabilidade de sobrevivência global:
+
+$$
+\hat F_j(t)
+=
+\sum_{m:t_m\le t}
+\hat\lambda_j(t_m)\hat S(t_{m-1})
+$$
+
+$$
+\hat\lambda_j(t_m)=\frac{d_{jm}}{n_m}
+\qquad\text{e}\qquad
+\hat S(t_{m-1})
+=
+\prod_{i=1}^{m-1}
+\left(1-\frac{d_i}{n_i}\right).
+$$
+
+onde:
+
+* $t_m$: m-ésimo tempo ordenado de falha;
+* $d_{jm}$: número de falhas da causa $j$ em $t_m$;
+* $d_m$: número total de falhas (todas as causas) em $t_m$;
+* $n_m$: número de indivíduos em risco imediatamente antes de $t_m$;
+* $\hat\lambda_j(t_m)$: risco específico estimado para a causa $j$;
+* $\hat S(t_{m-1})$: estimador de Kaplan-Meier da sobrevivência global até o instante anterior.
+
+:::
+
+## {#naive-estimator data-menu-title="Limitação de 1 - S(t)"}
+
+[Cumulative incidence estimation]{.slide-title}
+
+[Por que não utilizar o estimador ingênuo?]{.custom-subtitle2}
+
+<hr>
+
+::: body-text-s
+
+Em análises de sobrevivência sem riscos competitivos,
+
+$$
+F(t)=P(T\le t)=1-S(t),
+$$
+
+de modo que \(1-S(t)\) representa a probabilidade acumulada de ocorrência do evento.
+
+Em riscos competitivos, uma prática comum era estimar a incidência da causa \(j\) por
+
+$$
+1-\hat S_j(t),
+$$
+
+tratando as falhas por outras causas como observações censuradas.
+
+::: {.callout-warning}
+Essa abordagem assume implicitamente que indivíduos que falharam por outras causas ainda poderiam apresentar o evento de interesse no futuro.
+:::
+
+Como consequência,
+
+$$
+1-\hat S_j(t)\ge \hat F_j(t),
+$$
+
+isto é, o estimador ingênuo tende a superestimar a incidência acumulada da causa \(j\).
+
+:::

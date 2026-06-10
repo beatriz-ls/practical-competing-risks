@@ -10,8 +10,11 @@ format:
     theme: "bea_slide_theme.scss"
 ---
 
-##  {#topicos data-menu-title="Introdução"}
+##  {#introducao1 data-menu-title="Introdução"}
 
 [Introdução]{.slide-title}
 
 <hr>
+
+Em análise de sobrevivência, o interesse está no tempo até a ocorrência de um evento, sendo o arcabouço teórico tradicional desenvolvido considerando um unico evento. Entretanto, em muitos cenários reais, os indivíduos estão sujeitos a **múltiplos eventos concorrentes**, denominados **riscos competitivos**. Abordagens tradicionais para riscos competitivos buscavam estimar o tempo até um evento específico em um cenário hipotético sem os eventos concorrentes, exigindo **pressupostos fortes e não verificáveis**. Em contraste, métodos modernos concentram-se em quantidades diretamente estimáveis a partir dos dados observados, como as **cause-especific hazards (taxas de riscos específicos por causa)** e a **cumulative incidence estimation (Incidências cumulativas de estimação)**. Esta apresentação revisa os métodos mais modernos para análise de riscos competitivos apresentados no artigo *"Practical methods for competing
+risks data: A review" de Giorgos Bakoyannis e Giota Touloumi*, com foco em modelos do tipo Cox, aplicados nos dados do estudo CASCADE sobre interrupção e troca de terapia antirretroviral em indivíduos infectados pelo HIV.

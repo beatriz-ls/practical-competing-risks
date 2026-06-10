@@ -17,7 +17,13 @@ format:
 <hr>
 
 ::: body-text-m
-- Introdução
-- 
-- Referências
+-   Introdução
+-   Conceitos básicos de Análise de Sobrevivência
+-   Cause-Specific Hazard
+-   Estimação da Incidência Cumulativa (CIF)
+-   Modelo de Cox para hazards específicos por causa
+-   Modelo de Subdistribuição de Riscos
+-   Análise de sensibilidade
+-   Aplicação: Base de Dados CASCADE
+-   Referências
 :::
