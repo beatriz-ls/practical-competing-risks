@@ -10,7 +10,7 @@ format:
     theme: "bea_slide_theme.scss"
 ---
 
-## {#cause-specific-hazard data-menu-title="Cause-Specific Hazard"}
+##  {#cause-specific-hazard data-menu-title="Cause-Specific Hazard"}
 
 [Cause-especific Hazard]{.slide-title}
 
@@ -32,14 +32,13 @@ $$
 
 Essa relação decorre da aditividade das probabilidades para eventos mutuamente exclusivos e não requer hipóteses de independência entre os tempos de falha.
 
-## {#cif data-menu-title="Incidência Cumulativa"}
+##  {#cif data-menu-title="Incidência Cumulativa"}
 
 [Cumulative incidence estimation]{.slide-title}
 
 <hr>
 
 ::: body-text-s
-
 Em muitos estudos, o interesse está na probabilidade de ocorrência de uma causa específica ao longo do tempo.
 
 A **Função de Incidência Cumulativa (CIF)** para a causa (j) é definida por:
@@ -58,12 +57,12 @@ $$
 
 [Principais características]{.sanchez-font}
 
-* Possui interpretação direta como probabilidade;
-* Incorpora a competição entre os diferentes tipos de evento;
-* É a principal ferramenta para descrever a incidência de uma causa específica em estudos com riscos competitivos.
-
+-   Possui interpretação direta como probabilidade;
+-   Incorpora a competição entre os diferentes tipos de evento;
+-   É a principal ferramenta para descrever a incidência de uma causa específica em estudos com riscos competitivos.
 :::
-## {#cif-estimation data-menu-title="Estimando a CIF"}
+
+##  {#cif-estimation data-menu-title="Estimando a CIF"}
 
 [Cumulative incidence estimation]{.slide-title}
 
@@ -72,7 +71,6 @@ $$
 <hr>
 
 ::: body-text-s
-
 A CIF pode ser estimada por um estimador não paramétrico que combina os riscos específicos por causa com a probabilidade de sobrevivência global:
 
 $$
@@ -93,16 +91,15 @@ $$
 
 onde:
 
-* $t_m$: m-ésimo tempo ordenado de falha;
-* $d_{jm}$: número de falhas da causa $j$ em $t_m$;
-* $d_m$: número total de falhas (todas as causas) em $t_m$;
-* $n_m$: número de indivíduos em risco imediatamente antes de $t_m$;
-* $\hat\lambda_j(t_m)$: risco específico estimado para a causa $j$;
-* $\hat S(t_{m-1})$: estimador de Kaplan-Meier da sobrevivência global até o instante anterior.
-
+-   $t_m$: m-ésimo tempo ordenado de falha;
+-   $d_{jm}$: número de falhas da causa $j$ em $t_m$;
+-   $d_m$: número total de falhas (todas as causas) em $t_m$;
+-   $n_m$: número de indivíduos em risco imediatamente antes de $t_m$;
+-   $\hat\lambda_j(t_m)$: risco específico estimado para a causa $j$;
+-   $\hat S(t_{m-1})$: estimador de Kaplan-Meier da sobrevivência global até o instante anterior.
 :::
 
-## {#naive-estimator data-menu-title="Limitação de 1 - S(t)"}
+##  {#naive-estimator data-menu-title="Limitação de 1 - S(t)"}
 
 [Cumulative incidence estimation]{.slide-title}
 
@@ -110,17 +107,16 @@ onde:
 
 <hr>
 
-::: body-text-s
-
+:::: body-text-s
 Em análises de sobrevivência sem riscos competitivos,
 
 $$
 F(t)=P(T\le t)=1-S(t),
 $$
 
-de modo que \(1-S(t)\) representa a probabilidade acumulada de ocorrência do evento.
+de modo que (1-S(t)) representa a probabilidade acumulada de ocorrência do evento.
 
-Em riscos competitivos, uma prática comum era estimar a incidência da causa \(j\) por
+Em riscos competitivos, uma prática comum era estimar a incidência da causa (j) por
 
 $$
 1-\hat S_j(t),
@@ -128,7 +124,7 @@ $$
 
 tratando as falhas por outras causas como observações censuradas.
 
-::: {.callout-warning}
+::: callout-warning
 Essa abordagem assume implicitamente que indivíduos que falharam por outras causas ainda poderiam apresentar o evento de interesse no futuro.
 :::
 
@@ -138,6 +134,5 @@ $$
 1-\hat S_j(t)\ge \hat F_j(t),
 $$
 
-isto é, o estimador ingênuo tende a superestimar a incidência acumulada da causa \(j\).
-
-:::
+isto é, o estimador ingênuo tende a superestimar a incidência acumulada da causa (j).
+::::

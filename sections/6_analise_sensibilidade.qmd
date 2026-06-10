@@ -1,4 +1,208 @@
 ---
-title: "6_analise_sensibilidade"
-format: html
+format: 
+  revealjs:
+    slide-number: true
+    code-link: true
+    highlight-style: a11y
+    chalkboard: true
+    # self-contained: true
+    # scrollable: true
+    theme: "bea_slide_theme.scss"
 ---
+
+## {#sensitivity-intro data-menu-title="Análise de Sensibilidade"}
+
+[Análise de Sensibilidade]{.slide-title}
+
+[O que é análise de sensibilidade?]{.custom-subtitle2}
+
+<hr>
+
+::: body-text-s
+
+Uma análise de sensibilidade investiga o quanto as conclusões de um modelo dependem de hipóteses assumidas durante a estimação.
+
+Em riscos competitivos, o modelo de Fine & Gray pode ser ajustado sob diferentes mecanismos de censura:
+
+* **Censura administrativa**;
+* **Censura aleatória (random censoring)**.
+
+A questão central é:
+
+> As estimativas permanecem semelhantes quando utilizamos uma hipótese simplificadora em vez de um método mais geral?
+
+Se os resultados mudarem pouco, o método é considerado robusto à violação da hipótese.
+
+:::
+
+## {#admin-censoring-assumption data-menu-title="Hipótese Avaliada"}
+
+[Análise de Sensibilidade]{.slide-title}
+
+[Qual hipótese está sendo investigada?]{.custom-subtitle2}
+
+<hr>
+
+No modelo de Fine & Gray, a inferência é mais simples quando toda censura ocorre devido ao encerramento do estudo.
+
+Nesse caso, para cada indivíduo:
+
+$$
+d_i = d - W_i
+$$
+
+onde:
+
+* $d$: duração total do estudo;
+* $W_i$: instante de entrada do indivíduo;
+* $d_i$: tempo de censura administrativa.
+
+Entretanto, na prática podem existir perdas de seguimento antes do término do estudo.
+
+## {#admin-censoring-assumption data-menu-title="Hipótese Avaliada"}
+
+[Análise de Sensibilidade]{.slide-title}
+
+[Qual hipótese está sendo investigada?]{.custom-subtitle2}
+
+<hr>
+
+
+Assim, a censura observada pode ser:
+
+$$
+\min(U_i,d_i),
+$$
+
+onde:
+
+* $U_i$: censura aleatória;
+* $d_i$: censura administrativa.
+
+::: {.callout-warning}
+A análise de sensibilidade avalia o impacto de assumir apenas censura administrativa quando a censura aleatória também está presente.
+:::
+
+## {#simulation-strategy data-menu-title="Estratégia"}
+
+[Simulação]{.slide-title}
+
+[Como a sensibilidade foi avaliada?]{.custom-subtitle2}
+
+<hr>
+
+Os autores geraram dados simulados com:
+
+* Dois eventos competitivos;
+* Um único preditor ($x$);
+* Diferentes probabilidades do evento de interesse;
+* Diferentes intensidades de censura;
+* Diferentes durações do estudo.
+
+Para cada cenário foram comparadas duas abordagens:
+
+1. **Modelo assumindo censura administrativa**;
+2. **Modelo utilizando IPCW (Inverse Probability of Censoring Weighting)**.
+
+## {#simulation-strategy1 data-menu-title="Estratégia"}
+
+[Simulação]{.slide-title}
+
+[Como a sensibilidade foi avaliada?]{.custom-subtitle2}
+
+<hr>
+
+O objetivo foi verificar:
+
+* Viés na estimativa do efeito da covariável;
+* Cobertura dos intervalos de confiança;
+* Condições nas quais a hipótese de censura administrativa se torna inadequada.
+
+::: {.callout-important}
+Se os resultados dos dois métodos forem semelhantes, a hipótese de censura administrativa pode ser considerada aceitável naquele cenário.
+:::
+
+## {#simulation-strategy1 data-menu-title="Estratégia"}
+
+[Simulação]{.slide-title}
+
+[Construção dos cenários]{.custom-subtitle2}
+
+<hr>
+
+::: body-text-s
+
+A causa de falha foi simulada por uma variável $C \in {1,2}$, onde:
+
+* $C=1$: evento de interesse;
+* $C=2$: evento competitivo.
+
+A probabilidade de ocorrência do evento de interesse foi definida por
+
+$$
+P(C=1|x) = 1-(1-p)^{\exp(0.5x)},
+$$
+
+onde:
+
+* $p \in {0.3,0.5,0.7}$ controla a frequência do evento de interesse;
+* $x$ representa a covariável simulada.
+
+Foram considerados dois tipos de covariável:
+
+* $x \sim N(0,1)$ (contínua);
+* $x \sim Bernoulli(0.4)$ (binária).
+
+Dessa forma, diferentes cenários apresentavam proporções distintas entre evento de interesse e evento competitivo.
+
+:::
+
+## {#simulation-strategy2 data-menu-title="Estratégia"}
+
+[Simulação]{.slide-title}
+
+[Geração dos tempos de falha]{.custom-subtitle2}
+
+<hr>
+
+Após determinar a causa de falha, os tempos foram gerados condicionalmente à causa.
+
+Para o evento de interesse ($C=1$):
+
+$$
+P(T\le t|C=1,x) = \frac{1-(1-p[1-\exp(-t)])^{\exp(0.5x)}}{1-(1-p)^{\exp(0.5x}}.
+$$
+
+Para o evento competitivo ($C=2$):
+
+$$
+P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
+$$
+
+O parâmetro $\gamma \in {0.5,-0.5,-1}$ controla o efeito da covariável sobre o evento competitivo. Os autores variaram $\gamma$ para investigar situações em que a covariável possui efeitos semelhantes ou conflitantes entre as duas causas de falha.
+
+## {#simulation-strategy3 data-menu-title="Estratégia"}
+
+[Simulação]{.slide-title}
+
+[Introdução da censura]{.custom-subtitle2}
+
+<hr>
+
+::: body-text-s
+
+A censura aleatória foi gerada por $U_i \sim Exp(\lambda)$ com $\lambda \in {0.2,0.25,0.5,1,2,4}$
+
+O instante de entrada no estudo foi gerado por $W_i \sim U(0,1)$ e a censura administrativa foi definida como $d_i=d-W_i $ onde $d \in {1,2,4,8}$ representa a duração total do estudo.
+
+O tempo observado foi $$ Y_i=\min(T_i,U_i,d_i)$$
+Assim, a simulação permitiu avaliar simultaneamente o impacto de:
+
+* duração do estudo;
+* intensidade da censura;
+* frequência do evento de interesse;
+* efeito da covariável sobre o evento competitivo.
+
+No total foram avaliados $4 \times 6 \times 3 \times 3 \times 2 = 432$ cenários distintos.
+
+:::
