@@ -7,7 +7,22 @@ format: html
 
 <hr>
 
-Resumir
+O modelo de riscos proporcionais, proposto por Cox em 1972 como uma maneira de incluir covariáveis na análise, tem a forma:
+
+$$ h(t|X) = h_0 (t)exp(X \beta) $$
+
+Onde:
+- $h_0 (t)$ é uma função taxa de falha basal.
+- $X$ é o vetor de covariáveis.
+- $\beta$ é um vetor de coeficientes de regressão para serem estimados.
+
+## Modelo de Cox
+
+<hr>
+
+O modelo ganha o nome de riscos proporcionais uma vez que dados dois elementos distintos $(x_i,x_j)$, a razão das taxas de falhas de ambos é independente do tempo:
+
+$$ \frac{h(t|x_i)}{h(t|x_j)} = \frac{h_0 (t)exp(x_i \beta)}{h_0 (t)exp(x_j \beta)} = exp(x_i \beta - x_j \beta) $$
 
 ## Modelando taxa de falhas para causas específicas
 
