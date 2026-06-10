@@ -9,3 +9,90 @@ format:
     # scrollable: true
     theme: "bea_slide_theme.scss"
 ---
+
+
+## BIA PARTE 1
+
+
+
+
+
+
+## Efeito de Gênero em Interrupção ou Troca de Tratamento
+
+<hr>
+
+Abordaremos a análise do efeito de gênero na taxa de falha instantânea através de 3 métodos:
+
+- Isolado (A): onde ajustamos um modelo para cada causa tendo gênero como covariável de interesse.
+
+- Estratificado (B): onde ajustamos o modelo simultaneamente para ambos riscos usando o aumento de dados e depois estratificamos pela variável causa de falha.
+
+- Causal (C): onde ajustamos o modelo simultaneamente para ambos riscos usando o aumento de dados e incluímos a causa de falha como covariável.
+
+Lembre que: 
+
+- As estimativas de (B) deveriam ser idênticas a de (A).
+
+- O método (C) supõe taxas de falha proporcionais.
+
+- Analisamos a interação da covariável com o tipo de falha, sabendo que um efeito comum da covariável entre os tipos de falha (interação não sig) nos garante maior eficácia.
+
+## Efeito de Gênero em Interrupção ou Troca de Tratamento
+
+<hr>
+
+::: {#fig-table}
+![](tabela1.png){fig-align="center"}
+## Efeito de Gênero em Interrupção ou Troca de Tratamento
+
+<hr>
+
+Os três modelos concluíram efeito significativo do gênero no tempo até a interrupção do tratamento, com o risco para mulheres sendo 1.7 vezes maior que o risco para homens. Mas não houve efeito significativa no tempo até a troca de tratamento.
+
+Como esperado, as estimativas do modelo isolado foram idênticas as estimativas do modelo estratificado (0.531).
+
+A interação entre gênero e causa é tida como significativa, uma vez que o efeito do gênero na interrupção do tratamento é diferente do efeito na troca de tratamento.
+
+O modelo causal não indicou diferença na taxa de falha basal para causas diferentes, nem apontou interação significativa entre gênero e causa. Um gráfico omitido pelos autores mostra as curvas de cada grupo cruzando, rejeitando a hipótese de taxas de falha proporcionais e portanto a eficácia deste modelo.
+
+## Efeito de Gênero em Interrupção ou Troca de Tratamento
+
+<hr>
+
+Um gráfico que mostre o efeito da covariável gênero para o risco do evento TI não servirá de muito. No cenário de riscos competitivos, a função taxa de falha e função distribuição acumulada não são relacionadas um a um, uma vez que a acumulada é uma função de todas as taxas de falhas de cada risco, e uma covariável pode afetar cada uma delas de forma diferente. Um aumento na acumulada pode vir de um efeito positivo para uma causa ou de um efeito negativo em uma causa concorrente.
+
+Simulamos a função distribuição acumulada para interrupção de tratamento, estimada pelo modelo (A), tomando valores diferentes para a interação entre gênero e mudança de tratamento (que em nosso caso é nula). Ao aumentarmos a interação, mais mulheres sofrem mudança de tratamento e portanto não podem sofrer o risco competindo de interrupção de tratamento. Para valores maiores as curvas chegam a cruzar, mesmo as mulheres tendo risco significativamente maior de interrupção de tratamento. 
+
+## Efeito de Gênero em Interrupção ou Troca de Tratamento
+
+<hr>
+
+::: {#fig-img}
+![](figura2.png){fig-align="center"}
+
+
+## BIA PARTE 2
+
+
+## Fine and Gray Software
+
+<hr>
+
+A modelagem para a incidência acumulada usando taxas de falha de subsdistribuição proposta por Fine and Gray pode ser realizada no R através do pacte cmprsk. Repetimos a análise do efeito de gênero, desta vez na incidência acumulada, das 3 formas discutidas anteriormente:
+
+- Assumindo censura adminstrativa.
+
+- Lidando com censura aleatória através da IPCW (inverse probability of censoring weighting).
+
+- Otimizando as pesagens do IPCW de acordo com a data de início do tratamento. 
+
+## Fine and Gray Software
+
+<hr>
+
+::: {#fig-table}
+![](tabela2.png){fig-align="center"}
+
+
+
