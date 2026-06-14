@@ -10,113 +10,136 @@ format:
     theme: "bea_slide_theme.scss"
 ---
 
-## Análise de Sobrevivência
+##  {#survival-introduction data-menu-title="Análise de Sobrevivência"}
+
+[Análise de Sobrevivência]{.slide-title}
 
 <hr>
 
-- Estuda o tempo até a ocorrência de um evento de interesse (tempo de falha). 
-  - Tempo até a morte.
-  - Tempo até a recidica de uma doença.
-  - Tempo até a interrupção de um tratamento.
+-   Estuda o tempo até a ocorrência de um evento de interesse (tempo de falha).
 
-- Abranje uma vasta amplitude de áreas. Engenheiros estudam a confiabilidade de uma estrutura, sociólogos investigam tempo entre marcos sociais0 cíclicos, economistas concentram em tempo de promoção e o judiciário se atenta a tempo de reincidência do crime após liberação.
+    -   Tempo até a morte.
+    -   Tempo até a recidica de uma doença.
+    -   Tempo até a interrupção de um tratamento.
 
-- Complexidades
-  - Tempos de Sobrevivência são não negativos e geralmente assimétricos.
-  - Experimentos de tempo de vida são muito suscetíveis a casos de [censura]{style="color:red;"}.
+-   Abranje uma vasta amplitude de áreas. Engenheiros estudam a confiabilidade de uma estrutura, sociólogos investigam tempo entre marcos sociais0 cíclicos, economistas concentram em tempo de promoção e o judiciário se atenta a tempo de reincidência do crime após liberação.
+
+-   Complexidades
+
+    -   Tempos de Sobrevivência são não negativos e geralmente assimétricos.
+    -   Experimentos de tempo de vida são muito suscetíveis a casos de [censura]{style="color:red;"}.
     
 
-## Censura
+##  {#survival-introduction1 data-menu-title="Análise de Sobrevivência: Censura"}
+
+[Análise de Sobrevivência]{.slide-title}
+
+[Censura]{.custom-subtitle2}
 
 <hr>
 
-- Definimos como censura uma observação parcial do tempo de falha, e ela pode ocorrer por uma infinidade de fatores.
-  - Fim do tempo previsto para o experimento.
-  - Perda de acompanhamento do indivíduo.
-  - Coleta ineficaz dos dados.
-  
-- O poder de lidar com essas observações parciais, além da plétora de aplicações, faz da análise de sobrevivência uma das áreas mais citadas da estatística.
+-   Definimos como censura uma observação parcial do tempo de falha, e ela pode ocorrer por uma infinidade de fatores.
+    -   Fim do tempo previsto para o experimento.
+    -   Perda de acompanhamento do indivíduo.
+    -   Coleta ineficaz dos dados.
+-   O poder de lidar com essas observações parciais, além da plétora de aplicações, faz da análise de sobrevivência uma das áreas mais citadas da estatística.
 
+##  {#survival-introduction2 data-menu-title="Análise de Sobrevivência: Funções de Interesse"}
 
-## Funções de Interesse
+[Análise de Sobrevivência]{.slide-title}
+
+[Funções de Interesse]{.custom-subtitle2}
 
 <hr>
 
 Seja T uma variável aleatória contínua representando o tempo até a ocorrência de um evento de interesse.
 
-- A função de sobrevivência de T fornece a probabilidade que um indivíduo sobreviva após um dado tempo t:
-$$ S(t) = P(T > t) $$
+-   A função de sobrevivência de T fornece a probabilidade que um indivíduo sobreviva após um dado tempo t: $$ S(t) = P(T > t) $$
 
-- A função taxa de falha de T, que para cada momento t corresponde a taxa de falha instantânea naquele momento:
-$$ h(t) = lim_{\Delta t \rightarrow 0} \frac{P(t < T < t + \Delta t | T > t)}{\Delta t}$$
-
-## Funções de Interesse 
-
-<hr>
-
-- A função taxa de falha acumulada, dada por:
-$$ H(t) = \int _0^t h(u) du $$ 
-- A função de riscos, dada por:
-$$ R(t) = \frac{P(T \leq t)}{P(T > t)} = \frac{F(t)}{S(t)} $$
+-   A função taxa de falha de T, que para cada momento t corresponde a taxa de falha instantânea naquele momento: $$ h(t) = lim_{\Delta t \rightarrow 0} \frac{P(t < T < t + \Delta t | T > t)}{\Delta t}$$
 
 
-## Funções de Interesse
+##  {#survival-introduction3 data-menu-title="Análise de Sobrevivência: Funções de Interesse"}
+
+[Análise de Sobrevivência]{.slide-title}
+
+[Funções de Interesse]{.custom-subtitle2}
 
 <hr>
 
-É fácil mostrar que: 
+-   A função taxa de falha acumulada, dada por: $$ H(t) = \int _0^t h(u) du $$
+-   A função de riscos, dada por: $$ R(t) = \frac{P(T \leq t)}{P(T > t)} = \frac{F(t)}{S(t)} $$
+
+
+##  {#survival-introduction4 data-menu-title="Análise de Sobrevivência: Funções de Interesse"}
+
+[Análise de Sobrevivência]{.slide-title}
+
+[Funções de Interesse]{.custom-subtitle2}
+
+<hr>
+
+É fácil mostrar que:
 
 $$ h(t) = \frac{f(t)}{S(t)}$$
 
 $$ f(t) = - \frac{d}{dt} S(t) $$
 
-$$ S(t) = e^{-H(t)} $$
-$$ R(t) = e^{H(t)} - 1 $$
+$$ S(t) = e^{-H(t)} $$ $$ R(t) = e^{H(t)} - 1 $$
 
-## Dados de Sobrevivência
 
-<hr> 
+##  {#survival-introduction5 data-menu-title="Análise de Sobrevivência: Dados de Sobrevivência"}
+
+[Análise de Sobrevivência]{.slide-title}
+
+[Dados de Sobrevivência]{.custom-subtitle2}
+
+<hr>
 
 Uma base de dados para um estudo de de análise de sobrevivência é composto pelos seguintes items:
 
-- Tempo de sobrevivência observado (T).
+-   Tempo de sobrevivência observado (T).
 
-- Indicador de censura ($\delta$).
+-   Indicador de censura ($\delta$).
 
-- Covariáveis de interesse (X).
+-   Covariáveis de interesse (X).
 
+##  {#survival-introduction6 data-menu-title="Análise de Sobrevivência: Estimador de Kaplan - Meier"}
 
-## Estimador de Kaplan - Meier
+[Análise de Sobrevivência]{.slide-title}
+
+[Estimador de Kaplan - Meier]{.custom-subtitle2}
 
 <hr>
 
 Método não paramétrico de estimar a curva de sobrevivência. Dado uma amostra:
 
-- Sejam $t_1 < t_2 < ... < t_m$ os tempos distintos ordenados de sobrevivência.
+-   Sejam $t_1 < t_2 < ... < t_m$ os tempos distintos ordenados de sobrevivência.
 
-- Sejam $d_j$ o número de falhas em $t_j$, $j = 1,...,m$.
+-   Sejam $d_j$ o número de falhas em $t_j$, $j = 1,...,m$.
 
-- Sejam $n_j$ o número de indivíduos sob risco em $t_j$, $j = 1,...,m$.
+-   Sejam $n_j$ o número de indivíduos sob risco em $t_j$, $j = 1,...,m$.
 
 O estimador de Kaplan-Meier é definido como:
 
 $$ \hat{S}(t) = \prod_{j: t_j < j}(1 - d_j/n_j) $$
 
-- Estimador de Máxima Verossimilhança de para $S(t)$.
-- Não viciado para grandes amostras, fracamente consistente e assintonticamente Gaussiano.
+-   Estimador de Máxima Verossimilhança de para $S(t)$.
+-   Não viciado para grandes amostras, fracamente consistente e assintonticamente Gaussiano.
 
-## Modelo de Riscos Competitivos
+##  {#survival-introduction7 data-menu-title="Análise de Sobrevivência: Modelo de Riscos Competitivos"}
+
+[Modelo de Riscos Competitivos]{.slide-title2}
 
 <hr>
 
-Dados de risco competitivos são encontrados em estudos onde os participantes estão sobre risco de 2 ou mais causas mutualmente exclusivas. Por exemplo:
-- Morte devido a doença crônica ou morte por outras causas naturais.
-- Fim de uma empresa devido a falência ou devido a aquisição da mesma.
-- Remoção de um curso por reprovação ou por mudança de curso.
+Dados de risco competitivos são encontrados em estudos onde os participantes estão sobre risco de 2 ou mais causas mutualmente exclusivas. Por exemplo: - Morte devido a doença crônica ou morte por outras causas naturais. - Fim de uma empresa devido a falência ou devido a aquisição da mesma. - Remoção de um curso por reprovação ou por mudança de curso.
 
 Continuamos interessados no tempo de sobrevivência do indivíduo (T) e contínuamos lidando com as censuras ($\delta$) e observando covariáveis (X), mas agora trabalhamos também com uma indicadora de causa $C$.
 
-## Primeira Abordagem
+##  {#survival-introduction8 data-menu-title="Análise de Sobrevivência: Primeira Abordagem"}
+
+[Primeira Abordagem]{.slide-title}
 
 <hr>
 
@@ -126,15 +149,16 @@ Dados k riscos competindo, suponha que existam $T_1,...,T_k$ tempos de sobreviv�
 
 Seguiria então que $\hat{F}(t) = \hat{P}(T = min\{Tk\} \leq t) = \sum _{i = 1}^k \hat{F_i}(t)$.
 
-## Problema!
+##  {#survival-introduction9 data-menu-title="Análise de Sobrevivência: Problema"}
+
+[Problema!]{.slide-title}
 
 <hr>
 
-- Nem a distribuição conjunta, nem as correspondentes distribuições marginais para as causas são identificáveis pelos dados observados sem fortes hipóteses adicionais, como por exemplo a independência desses tempos latentes.
+-   Nem a distribuição conjunta, nem as correspondentes distribuições marginais para as causas são identificáveis pelos dados observados sem fortes hipóteses adicionais, como por exemplo a independência desses tempos latentes.
 
-- Pior ainda, essas hipóteses não podem ser testadas, uma vez que não observamos esses tempos latentes. 
- 
-- Inclusive, aplicações já mostraram como o estimador Naive Kaplan Meier $\hat{F}(t)$ produz valores maiores que um para a função de distribuição.
+-   Pior ainda, essas hipóteses não podem ser testadas, uma vez que não observamos esses tempos latentes.
 
-- Este modelo estima corretamente a incidência acumulativa no caso hipotético onde falhas por riscos competitivos foram eliminados e que a taxa de falha específica para a causa não se altera após eliminar outro risco. 
+-   Inclusive, aplicações já mostraram como o estimador Naive Kaplan Meier $\hat{F}(t)$ produz valores maiores que um para a função de distribuição.
 
+-   Este modelo estima corretamente a incidência acumulativa no caso hipotético onde falhas por riscos competitivos foram eliminados e que a taxa de falha específica para a causa não se altera após eliminar outro risco.

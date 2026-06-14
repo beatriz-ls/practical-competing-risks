@@ -43,3 +43,28 @@ Slides disponíveis em [GitHub](https://github.com/beatriz-ls/practical-competin
 
 {{< include sections/2_introducao.qmd >}}
 
+------------------------------------------------------------------------
+
+{{< include sections/3_introducao_sobrevivencia.qmd >}}
+
+------------------------------------------------------------------------
+
+{{< include sections/4_teoria_hazard_cif.qmd >}}
+
+------------------------------------------------------------------------
+
+{{< include sections/5_modelagem.qmd >}}
+
+------------------------------------------------------------------------
+
+{{< include sections/6_analise_sensibilidade.qmd >}}
+
+------------------------------------------------------------------------
+
+{{< include sections/7_resultados.qmd >}}
+
+------------------------------------------------------------------------
+
+{{< include sections/8_conclusao.qmd >}}
+
+

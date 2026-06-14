@@ -135,12 +135,12 @@
 <hr style="border: 1px solid #5D0D18;">
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><span class="custom-subtitle3">Beatriz Lima Silveira</span><br> <span class="custom-subtitle3">Felipe Ramos</span><br></p>
+<p><span class="custom-subtitle3">Beatriz Lima Silveira</span><br> <span class="custom-subtitle3">Felipe Mancini Ramos</span><br></p>
 </div><div class="column" style="width:50%;">
 <p><span class="custom-subtitle3">Universidade Federal de Minas Gerais</span> <br></p>
 </div></div>
 <div class="title-footer">
-<p>Slides disponíveis em <a href="https://github.com/beatriz-ls/minicurso_introducao_inferencia_causal_rladies" class="cover-link">GitHub</a></p>
+<p>Slides disponíveis em <a href="https://github.com/beatriz-ls/practical-competing-risks" class="cover-link">GitHub</a></p>
 </div>
 <p><br></p>
 </section>
@@ -151,15 +151,708 @@
 <div class="body-text-m">
 <ul>
 <li>Introdução</li>
-<li></li>
+<li>Conceitos básicos de Análise de Sobrevivência</li>
+<li>Cause-Specific Hazard</li>
+<li>Estimação da Incidência Cumulativa (CIF)</li>
+<li>Modelo de Cox para hazards específicos por causa</li>
+<li>Modelo de Subdistribuição de Riscos</li>
+<li>Análise de sensibilidade</li>
+<li>Aplicação: Base de Dados CASCADE</li>
 <li>Referências</li>
 </ul>
 </div>
 </section>
-<section id="topicos" class="slide level2" data-menu-title="Introdução">
+<section id="introducao1" class="slide level2" data-menu-title="Introdução">
 <h2></h2>
 <p><span class="slide-title">Introdução</span></p>
 <hr>
+<p>Em análise de sobrevivência, o interesse está no tempo até a ocorrência de um evento, sendo o arcabouço teórico tradicional desenvolvido considerando um unico evento. Entretanto, em muitos cenários reais, os indivíduos estão sujeitos a <strong>múltiplos eventos concorrentes</strong>, denominados <strong>riscos competitivos</strong>. Abordagens tradicionais para riscos competitivos buscavam estimar o tempo até um evento específico em um cenário hipotético sem os eventos concorrentes, exigindo <strong>pressupostos fortes e não verificáveis</strong>. Em contraste, métodos modernos concentram-se em quantidades diretamente estimáveis a partir dos dados observados, como as <strong>cause-especific hazards (taxas de riscos específicos por causa)</strong> e a <strong>cumulative incidence estimation (Incidências cumulativas de estimação)</strong>. Esta apresentação revisa os métodos mais modernos para análise de riscos competitivos apresentados no artigo <em>“Practical methods for competing risks data: A review” de Giorgos Bakoyannis e Giota Touloumi</em>, com foco em modelos do tipo Cox, aplicados nos dados do estudo CASCADE sobre interrupção e troca de terapia antirretroviral em indivíduos infectados pelo HIV.</p>
+</section>
+<section id="survival-introduction" class="slide level2" data-menu-title="Análise de Sobrevivência">
+<h2></h2>
+<p><span class="slide-title">Análise de Sobrevivência</span></p>
+<hr>
+<ul>
+<li><p>Estuda o tempo até a ocorrência de um evento de interesse (tempo de falha).</p>
+<ul>
+<li>Tempo até a morte.</li>
+<li>Tempo até a recidica de uma doença.</li>
+<li>Tempo até a interrupção de um tratamento.</li>
+</ul></li>
+<li><p>Abranje uma vasta amplitude de áreas. Engenheiros estudam a confiabilidade de uma estrutura, sociólogos investigam tempo entre marcos sociais0 cíclicos, economistas concentram em tempo de promoção e o judiciário se atenta a tempo de reincidência do crime após liberação.</p></li>
+<li><p>Complexidades</p>
+<ul>
+<li>Tempos de Sobrevivência são não negativos e geralmente assimétricos.</li>
+<li>Experimentos de tempo de vida são muito suscetíveis a casos de <span style="color:red;">censura</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="survival-introduction1" class="slide level2" data-menu-title="Análise de Sobrevivência: Censura">
+<h2></h2>
+<p><span class="slide-title">Análise de Sobrevivência</span></p>
+<p><span class="custom-subtitle2">Censura</span></p>
+<hr>
+<ul>
+<li>Definimos como censura uma observação parcial do tempo de falha, e ela pode ocorrer por uma infinidade de fatores.
+<ul>
+<li>Fim do tempo previsto para o experimento.</li>
+<li>Perda de acompanhamento do indivíduo.</li>
+<li>Coleta ineficaz dos dados.</li>
+</ul></li>
+<li>O poder de lidar com essas observações parciais, além da plétora de aplicações, faz da análise de sobrevivência uma das áreas mais citadas da estatística.</li>
+</ul>
+</section>
+<section id="survival-introduction2" class="slide level2" data-menu-title="Análise de Sobrevivência: Funções de Interesse">
+<h2></h2>
+<p><span class="slide-title">Análise de Sobrevivência</span></p>
+<p><span class="custom-subtitle2">Funções de Interesse</span></p>
+<hr>
+<p>Seja T uma variável aleatória contínua representando o tempo até a ocorrência de um evento de interesse.</p>
+<ul>
+<li><p>A função de sobrevivência de T fornece a probabilidade que um indivíduo sobreviva após um dado tempo t: <span class="math display">\[ S(t) = P(T &gt; t) \]</span></p></li>
+<li><p>A função taxa de falha de T, que para cada momento t corresponde a taxa de falha instantânea naquele momento: <span class="math display">\[ h(t) = lim_{\Delta t \rightarrow 0} \frac{P(t &lt; T &lt; t + \Delta t | T &gt; t)}{\Delta t}\]</span></p></li>
+</ul>
+</section>
+<section id="survival-introduction3" class="slide level2" data-menu-title="Análise de Sobrevivência: Funções de Interesse">
+<h2></h2>
+<p><span class="slide-title">Análise de Sobrevivência</span></p>
+<p><span class="custom-subtitle2">Funções de Interesse</span></p>
+<hr>
+<ul>
+<li>A função taxa de falha acumulada, dada por: <span class="math display">\[ H(t) = \int _0^t h(u) du \]</span></li>
+<li>A função de riscos, dada por: <span class="math display">\[ R(t) = \frac{P(T \leq t)}{P(T &gt; t)} = \frac{F(t)}{S(t)} \]</span></li>
+</ul>
+</section>
+<section id="survival-introduction4" class="slide level2" data-menu-title="Análise de Sobrevivência: Funções de Interesse">
+<h2></h2>
+<p><span class="slide-title">Análise de Sobrevivência</span></p>
+<p><span class="custom-subtitle2">Funções de Interesse</span></p>
+<hr>
+<p>É fácil mostrar que:</p>
+<p><span class="math display">\[ h(t) = \frac{f(t)}{S(t)}\]</span></p>
+<p><span class="math display">\[ f(t) = - \frac{d}{dt} S(t) \]</span></p>
+<p><span class="math display">\[ S(t) = e^{-H(t)} \]</span> <span class="math display">\[ R(t) = e^{H(t)} - 1 \]</span></p>
+</section>
+<section id="survival-introduction5" class="slide level2" data-menu-title="Análise de Sobrevivência: Dados de Sobrevivência">
+<h2></h2>
+<p><span class="slide-title">Análise de Sobrevivência</span></p>
+<p><span class="custom-subtitle2">Dados de Sobrevivência</span></p>
+<hr>
+<p>Uma base de dados para um estudo de de análise de sobrevivência é composto pelos seguintes items:</p>
+<ul>
+<li><p>Tempo de sobrevivência observado (T).</p></li>
+<li><p>Indicador de censura (<span class="math inline">\(\delta\)</span>).</p></li>
+<li><p>Covariáveis de interesse (X).</p></li>
+</ul>
+</section>
+<section id="survival-introduction6" class="slide level2" data-menu-title="Análise de Sobrevivência: Estimador de Kaplan - Meier">
+<h2></h2>
+<p><span class="slide-title">Análise de Sobrevivência</span></p>
+<p><span class="custom-subtitle2">Estimador de Kaplan - Meier</span></p>
+<hr>
+<p>Método não paramétrico de estimar a curva de sobrevivência. Dado uma amostra:</p>
+<ul>
+<li><p>Sejam <span class="math inline">\(t_1 &lt; t_2 &lt; ... &lt; t_m\)</span> os tempos distintos ordenados de sobrevivência.</p></li>
+<li><p>Sejam <span class="math inline">\(d_j\)</span> o número de falhas em <span class="math inline">\(t_j\)</span>, <span class="math inline">\(j = 1,...,m\)</span>.</p></li>
+<li><p>Sejam <span class="math inline">\(n_j\)</span> o número de indivíduos sob risco em <span class="math inline">\(t_j\)</span>, <span class="math inline">\(j = 1,...,m\)</span>.</p></li>
+</ul>
+<p>O estimador de Kaplan-Meier é definido como:</p>
+<p><span class="math display">\[ \hat{S}(t) = \prod_{j: t_j &lt; j}(1 - d_j/n_j) \]</span></p>
+<ul>
+<li>Estimador de Máxima Verossimilhança de para <span class="math inline">\(S(t)\)</span>.</li>
+<li>Não viciado para grandes amostras, fracamente consistente e assintonticamente Gaussiano.</li>
+</ul>
+</section>
+<section id="survival-introduction7" class="slide level2" data-menu-title="Análise de Sobrevivência: Modelo de Riscos Competitivos">
+<h2></h2>
+<p><span class="slide-title2">Modelo de Riscos Competitivos</span></p>
+<hr>
+<p>Dados de risco competitivos são encontrados em estudos onde os participantes estão sobre risco de 2 ou mais causas mutualmente exclusivas. Por exemplo: - Morte devido a doença crônica ou morte por outras causas naturais. - Fim de uma empresa devido a falência ou devido a aquisição da mesma. - Remoção de um curso por reprovação ou por mudança de curso.</p>
+<p>Continuamos interessados no tempo de sobrevivência do indivíduo (T) e contínuamos lidando com as censuras (<span class="math inline">\(\delta\)</span>) e observando covariáveis (X), mas agora trabalhamos também com uma indicadora de causa <span class="math inline">\(C\)</span>.</p>
+</section>
+<section id="survival-introduction8" class="slide level2" data-menu-title="Análise de Sobrevivência: Primeira Abordagem">
+<h2></h2>
+<p><span class="slide-title">Primeira Abordagem</span></p>
+<hr>
+<p>No passado, os estudos de risco competitivos buscavam inferir sobre a distribuição do tempo até uma falha por causa específica na ausência hipotética dos outros, da seguinte forma:</p>
+<p>Dados k riscos competindo, suponha que existam <span class="math inline">\(T_1,...,T_k\)</span> tempos de sobrevivência latentes para cada causa, então observamos apenas <span class="math inline">\(T = min\{T_k\}\)</span>e a causa da falha (C). Para estimar a função distribuição <span class="math inline">\(T_i (t)\)</span> para cada causa <span class="math inline">\(i = 1,...k\)</span>, podemos tratar qualquer tempo cuja causa não seja i como censura (uma observação parcial de <span class="math inline">\(T_i\)</span>), aplicar o estimador de Kaplan-Meier para achar <span class="math inline">\(\hat{S_i}(t)\)</span> e tomar <span class="math inline">\(\hat{F_i}(t) = 1 - \hat{S_i}(t)\)</span>.</p>
+<p>Seguiria então que <span class="math inline">\(\hat{F}(t) = \hat{P}(T = min\{Tk\} \leq t) = \sum _{i = 1}^k \hat{F_i}(t)\)</span>.</p>
+</section>
+<section id="survival-introduction9" class="slide level2" data-menu-title="Análise de Sobrevivência: Problema">
+<h2></h2>
+<p><span class="slide-title">Problema!</span></p>
+<hr>
+<ul>
+<li><p>Nem a distribuição conjunta, nem as correspondentes distribuições marginais para as causas são identificáveis pelos dados observados sem fortes hipóteses adicionais, como por exemplo a independência desses tempos latentes.</p></li>
+<li><p>Pior ainda, essas hipóteses não podem ser testadas, uma vez que não observamos esses tempos latentes.</p></li>
+<li><p>Inclusive, aplicações já mostraram como o estimador Naive Kaplan Meier <span class="math inline">\(\hat{F}(t)\)</span> produz valores maiores que um para a função de distribuição.</p></li>
+<li><p>Este modelo estima corretamente a incidência acumulativa no caso hipotético onde falhas por riscos competitivos foram eliminados e que a taxa de falha específica para a causa não se altera após eliminar outro risco.</p></li>
+</ul>
+</section>
+<section id="cause-specific-hazard" class="slide level2" data-menu-title="Cause-Specific Hazard">
+<h2></h2>
+<p><span class="slide-title">Cause-especific Hazard</span></p>
+<hr>
+<p>Na abordagem moderna de riscos competitivos, o interesse concentra-se em quantidades diretamente observáveis: o tempo até a ocorrência do evento (T) e a causa associada (C).</p>
+<p>O <strong>risco específico por causa</strong> para a causa (j) é definido como a taxa instantânea de ocorrência dessa causa entre os indivíduos que ainda não apresentaram nenhum evento:</p>
+<p><span class="math display">\[
+\lambda_j(t) =  \lim_{h \to 0} \frac{P(t \le T &lt; t+h,; C=j \mid T \ge t)}{h}
+\]</span></p>
+<p>O risco total é obtido pela soma dos riscos específicos:</p>
+<p><span class="math display">\[
+\lambda(t)=\sum_{j=1}^{k}\lambda_j(t)
+\]</span></p>
+<p>Essa relação decorre da aditividade das probabilidades para eventos mutuamente exclusivos e não requer hipóteses de independência entre os tempos de falha.</p>
+</section>
+<section id="cif" class="slide level2" data-menu-title="Incidência Cumulativa">
+<h2></h2>
+<p><span class="slide-title">Cumulative incidence estimation</span></p>
+<hr>
+<div class="body-text-s">
+<p>Em muitos estudos, o interesse está na probabilidade de ocorrência de uma causa específica ao longo do tempo.</p>
+<p>A <strong>Função de Incidência Cumulativa (CIF)</strong> para a causa (j) é definida por:</p>
+<p><span class="math display">\[
+F_j(t)=P(T \le t,; C=j)
+\]</span></p>
+<p>e representa a probabilidade acumulada de falha pela causa (j) até o tempo (t), considerando explicitamente a presença dos eventos concorrentes.</p>
+<p>A CIF pode ser expressa em função dos riscos específicos por causa:</p>
+<p><span class="math display">\[
+F_j(t) = \int_0^t \lambda_j(u) \exp\left( -\int_0^u \sum_{c=1}^{k}\lambda_c(w),dw \right) du
+\]</span></p>
+<p><span class="sanchez-font">Principais características</span></p>
+<ul>
+<li>Possui interpretação direta como probabilidade;</li>
+<li>Incorpora a competição entre os diferentes tipos de evento;</li>
+<li>É a principal ferramenta para descrever a incidência de uma causa específica em estudos com riscos competitivos.</li>
+</ul>
+</div>
+</section>
+<section id="cif-estimation" class="slide level2" data-menu-title="Estimando a CIF">
+<h2></h2>
+<p><span class="slide-title">Cumulative incidence estimation</span></p>
+<p><span class="custom-subtitle2">Estimando a Cumulative Incidence Function</span></p>
+<hr>
+<div class="body-text-s">
+<p>A CIF pode ser estimada por um estimador não paramétrico que combina os riscos específicos por causa com a probabilidade de sobrevivência global:</p>
+<p><span class="math display">\[
+\hat F_j(t)
+=
+\sum_{m:t_m\le t}
+\hat\lambda_j(t_m)\hat S(t_{m-1})
+\]</span></p>
+<p><span class="math display">\[
+\hat\lambda_j(t_m)=\frac{d_{jm}}{n_m}
+\qquad\text{e}\qquad
+\hat S(t_{m-1})
+=
+\prod_{i=1}^{m-1}
+\left(1-\frac{d_i}{n_i}\right).
+\]</span></p>
+<p>onde:</p>
+<ul>
+<li><span class="math inline">\(t_m\)</span>: m-ésimo tempo ordenado de falha;</li>
+<li><span class="math inline">\(d_{jm}\)</span>: número de falhas da causa <span class="math inline">\(j\)</span> em <span class="math inline">\(t_m\)</span>;</li>
+<li><span class="math inline">\(d_m\)</span>: número total de falhas (todas as causas) em <span class="math inline">\(t_m\)</span>;</li>
+<li><span class="math inline">\(n_m\)</span>: número de indivíduos em risco imediatamente antes de <span class="math inline">\(t_m\)</span>;</li>
+<li><span class="math inline">\(\hat\lambda_j(t_m)\)</span>: risco específico estimado para a causa <span class="math inline">\(j\)</span>;</li>
+<li><span class="math inline">\(\hat S(t_{m-1})\)</span>: estimador de Kaplan-Meier da sobrevivência global até o instante anterior.</li>
+</ul>
+</div>
+</section>
+<section id="naive-estimator" class="slide level2" data-menu-title="Limitação de 1 - S(t)">
+<h2></h2>
+<p><span class="slide-title">Cumulative incidence estimation</span></p>
+<p><span class="custom-subtitle2">Por que não utilizar o estimador ingênuo?</span></p>
+<hr>
+<div class="body-text-s">
+<p>Em análises de sobrevivência sem riscos competitivos,</p>
+<p><span class="math display">\[
+F(t)=P(T\le t)=1-S(t),
+\]</span></p>
+<p>de modo que (1-S(t)) representa a probabilidade acumulada de ocorrência do evento.</p>
+<p>Em riscos competitivos, uma prática comum era estimar a incidência da causa (j) por</p>
+<p><span class="math display">\[
+1-\hat S_j(t),
+\]</span></p>
+<p>tratando as falhas por outras causas como observações censuradas.</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Essa abordagem assume implicitamente que indivíduos que falharam por outras causas ainda poderiam apresentar o evento de interesse no futuro.</p>
+</div>
+</div>
+</div>
+<p>Como consequência,</p>
+<p><span class="math display">\[
+1-\hat S_j(t)\ge \hat F_j(t),
+\]</span></p>
+<p>isto é, o estimador ingênuo tende a superestimar a incidência acumulada da causa (j).</p>
+</div>
+</section>
+<section id="modelo-cox" class="slide level2" data-menu-title="Modelo de Cox">
+<h2></h2>
+<p><span class="slide-title">Modelo de Cox</span></p>
+<hr>
+<p>O modelo de riscos proporcionais, proposto por Cox em 1972 como uma maneira de incluir covariáveis na análise, tem a forma:</p>
+<p><span class="math display">\[ h(t|X) = h_0 (t)exp(X \beta) \]</span></p>
+<p>Onde: - <span class="math inline">\(h_0 (t)\)</span> é uma função taxa de falha basal. - <span class="math inline">\(X\)</span> é o vetor de covariáveis. - <span class="math inline">\(\beta\)</span> é um vetor de coeficientes de regressão para serem estimados.</p>
+</section>
+<section id="modelo-cox1" class="slide level2" data-menu-title="Modelo de Cox">
+<h2></h2>
+<p><span class="slide-title">Modelo de Cox</span></p>
+<hr>
+<p>O modelo ganha o nome de riscos proporcionais uma vez que dados dois elementos distintos <span class="math inline">\((x_i,x_j)\)</span>, a razão das taxas de falhas de ambos é independente do tempo:</p>
+<p><span class="math display">\[ \frac{h(t|x_i)}{h(t|x_j)} = \frac{h_0 (t)exp(x_i \beta)}{h_0 (t)exp(x_j \beta)} = exp(x_i \beta - x_j \beta) \]</span></p>
+</section>
+<section id="modelo-cox2" class="slide level2" data-menu-title="Modelando taxa de falhas para causas específicas">
+<h2></h2>
+<p><span class="slide-title">Modelando taxa de falhas para causas específicas</span></p>
+<hr>
+<p>Para investigar como as covariáveis X podem afetar a taxa de falha instantânea devido a uma causa na presença de todas as outras, um método análogo ao de taxas de falha proporcionais de Cox foi proposto para o cenário de riscos competitivos:</p>
+<p><span class="math display">\[\lambda_j(t,X) = \lambda_{0j}(t)exp(\beta _j X)\]</span></p>
+<p>Na prática, esse modelo pode ser estimado tratando falhas de outras causas como censuras e ajustando um modelo Cox tradicional sem as fortes hipóteses discutidas antes, isto é, trabalhar isoladamente.</p>
+</section>
+<section id="modelo-cox3" class="slide level2" data-menu-title="Modelando taxa de falhas para causas específicas">
+<h2></h2>
+<p><span class="slide-title">Modelando taxa de falhas para causas específicas</span></p>
+<hr>
+<p>Para evitar esse trabalho isolado, foram desenvolvidos métodos de aumento de dados para modelar taxas de falha para todas as causas e testar a igualdade dos efeitos das covariáveis nos modelos de falhas diferentes.</p>
+<p>Para isso, devemos trabalhar com os dados em um “formato longo” - Cada indivíduo deve ter k indicadoras de causa. - Cada covariável de interesse deve gerar k subvariáveis específicas a causa, de tal forma que no caso de j-ésima falha, a j-ésima subcovariável valha o valor original e todas as outras valham zero.</p>
+</section>
+<section id="modelo-cox4" class="slide level2" data-menu-title="Modelando taxa de falhas para causas específicas">
+<h2></h2>
+<p><span class="slide-title">Modelando taxa de falhas para causas específicas</span></p>
+<hr>
+<p>Feito isso, restam duas abordagens:</p>
+<ul>
+<li>Estratificar por causa de falha: este modelo gera estimativas idênticas a modelagem isolada.</li>
+<li>Incluir a causa de falha (C) como covariável: este modelo assume taxas de falha proporcionais.</li>
+</ul>
+<p>Nas duas abordagens, o efeito de uma covariável no tempo de falha em cada causa pode ser estimado incluindo no modelo suas subcovariáveis correspondentes.</p>
+<p>Também é possível incluir no modelo termos de interação da covariável com a causa de falha, para testar se o efeito da covariável é comum entre as causas. No caso afirmativo, a eficiência do modelo aumenta.</p>
+</section>
+<section id="modelo-fine-and-gray" class="slide level2">
+<h2>Modelo Fine and Gray</h2>
+<hr>
+<p>Modelar apenas as taxas de falhas instantaneas não quantifica o ganho ou perda geral que uma covariável imbui no tempo de falha, logo modelar a incidencia acumulativa pode tornar a interpretação mais relevante. Um modelo deste tipo foi sugerido por Fine and Gray.</p>
+<p>Defina a taxa de falha de subdistribuição (subdistribution hazard) como:</p>
+<p><span class="math display">\[ \lambda _j ^{sub} (t,x) = lim_{h \rightarrow 0} \frac{1}{h} P[t \leq T &lt; t + h, C = j | T \geq t \cup (T \leq t \cap C \neq j),X] \]</span> <span class="math display">\[ = \frac{-d}{dt} log[1 - F_j(t,X)]\]</span></p>
+<p>Note que esse não é a taxa da falha natural pois inclui no tempo t sujeitos que falharam por outras causas antes de t e não estão mais em risco.</p>
+</section>
+<section id="modelo-fine-and-gray-1" class="slide level2">
+<h2>Modelo Fine and Gray</h2>
+<hr>
+<p>Com essa taxa de falha, foi proposto um modelo semiparamétrico de taxa de falha proporcional:</p>
+<p><span class="math display">\[ \lambda _j ^{sub} (t,x) = \lambda _{0j} ^{sub} (t,x) exp(\beta _j X) \]</span></p>
+</section>
+<section id="sensitivity-intro" class="slide level2" data-menu-title="Análise de Sensibilidade">
+<h2></h2>
+<p><span class="slide-title">Análise de Sensibilidade</span></p>
+<p><span class="custom-subtitle2">O que é análise de sensibilidade?</span></p>
+<hr>
+<div class="body-text-s">
+<p>Uma análise de sensibilidade investiga o quanto as conclusões de um modelo dependem de hipóteses assumidas durante a estimação.</p>
+<p>Em riscos competitivos, o modelo de Fine &amp; Gray pode ser ajustado sob diferentes mecanismos de censura:</p>
+<ul>
+<li><strong>Censura administrativa</strong>;</li>
+<li><strong>Censura aleatória (random censoring)</strong>.</li>
+</ul>
+<p>A questão central é:</p>
+<blockquote>
+<p>As estimativas permanecem semelhantes quando utilizamos uma hipótese simplificadora em vez de um método mais geral?</p>
+</blockquote>
+<p>Se os resultados mudarem pouco, o método é considerado robusto à violação da hipótese.</p>
+</div>
+</section>
+<section id="admin-censoring-assumption" class="slide level2" data-menu-title="Hipótese Avaliada">
+<h2></h2>
+<p><span class="slide-title">Análise de Sensibilidade</span></p>
+<p><span class="custom-subtitle2">Qual hipótese está sendo investigada?</span></p>
+<hr>
+<p>No modelo de Fine &amp; Gray, a inferência é mais simples quando toda censura ocorre devido ao encerramento do estudo.</p>
+<p>Nesse caso, para cada indivíduo:</p>
+<p><span class="math display">\[
+d_i = d - W_i
+\]</span></p>
+<p>onde:</p>
+<ul>
+<li><span class="math inline">\(d\)</span>: duração total do estudo;</li>
+<li><span class="math inline">\(W_i\)</span>: instante de entrada do indivíduo;</li>
+<li><span class="math inline">\(d_i\)</span>: tempo de censura administrativa.</li>
+</ul>
+<p>Entretanto, na prática podem existir perdas de seguimento antes do término do estudo.</p>
+</section>
+<section id="admin-censoring-assumption" class="slide level2" data-menu-title="Hipótese Avaliada">
+<h2></h2>
+<p><span class="slide-title">Análise de Sensibilidade</span></p>
+<p><span class="custom-subtitle2">Qual hipótese está sendo investigada?</span></p>
+<hr>
+<p>Assim, a censura observada pode ser:</p>
+<p><span class="math display">\[
+\min(U_i,d_i),
+\]</span></p>
+<p>onde:</p>
+<ul>
+<li><span class="math inline">\(U_i\)</span>: censura aleatória;</li>
+<li><span class="math inline">\(d_i\)</span>: censura administrativa.</li>
+</ul>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>A análise de sensibilidade avalia o impacto de assumir apenas censura administrativa quando a censura aleatória também está presente.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation-strategy" class="slide level2" data-menu-title="Estratégia">
+<h2></h2>
+<p><span class="slide-title">Simulação</span></p>
+<p><span class="custom-subtitle2">Como a sensibilidade foi avaliada?</span></p>
+<hr>
+<p>Os autores geraram dados simulados com:</p>
+<ul>
+<li>Dois eventos competitivos;</li>
+<li>Um único preditor (<span class="math inline">\(x\)</span>);</li>
+<li>Diferentes probabilidades do evento de interesse;</li>
+<li>Diferentes intensidades de censura;</li>
+<li>Diferentes durações do estudo.</li>
+</ul>
+<p>Para cada cenário foram comparadas duas abordagens:</p>
+<ol type="1">
+<li><strong>Modelo assumindo censura administrativa</strong>;</li>
+<li><strong>Modelo utilizando IPCW (Inverse Probability of Censoring Weighting)</strong>.</li>
+</ol>
+</section>
+<section id="simulation-strategy1" class="slide level2" data-menu-title="Estratégia">
+<h2></h2>
+<p><span class="slide-title">Simulação</span></p>
+<p><span class="custom-subtitle2">Como a sensibilidade foi avaliada?</span></p>
+<hr>
+<p>O objetivo foi verificar:</p>
+<ul>
+<li>Viés na estimativa do efeito da covariável;</li>
+<li>Cobertura dos intervalos de confiança;</li>
+<li>Condições nas quais a hipótese de censura administrativa se torna inadequada.</li>
+</ul>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Se os resultados dos dois métodos forem semelhantes, a hipótese de censura administrativa pode ser considerada aceitável naquele cenário.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation-strategy1" class="slide level2" data-menu-title="Estratégia">
+<h2></h2>
+<p><span class="slide-title">Simulação</span></p>
+<p><span class="custom-subtitle2">Construção dos cenários</span></p>
+<hr>
+<div class="body-text-s">
+<p>A causa de falha foi simulada por uma variável <span class="math inline">\(C \in {1,2}\)</span>, onde:</p>
+<ul>
+<li><span class="math inline">\(C=1\)</span>: evento de interesse;</li>
+<li><span class="math inline">\(C=2\)</span>: evento competitivo.</li>
+</ul>
+<p>A probabilidade de ocorrência do evento de interesse foi definida por</p>
+<p><span class="math display">\[
+P(C=1|x) = 1-(1-p)^{\exp(0.5x)},
+\]</span></p>
+<p>onde:</p>
+<ul>
+<li><span class="math inline">\(p \in {0.3,0.5,0.7}\)</span> controla a frequência do evento de interesse;</li>
+<li><span class="math inline">\(x\)</span> representa a covariável simulada.</li>
+</ul>
+<p>Foram considerados dois tipos de covariável:</p>
+<ul>
+<li><span class="math inline">\(x \sim N(0,1)\)</span> (contínua);</li>
+<li><span class="math inline">\(x \sim Bernoulli(0.4)\)</span> (binária).</li>
+</ul>
+<p>Dessa forma, diferentes cenários apresentavam proporções distintas entre evento de interesse e evento competitivo.</p>
+</div>
+</section>
+<section id="simulation-strategy2" class="slide level2" data-menu-title="Estratégia">
+<h2></h2>
+<p><span class="slide-title">Simulação</span></p>
+<p><span class="custom-subtitle2">Geração dos tempos de falha</span></p>
+<hr>
+<p>Após determinar a causa de falha, os tempos foram gerados condicionalmente à causa.</p>
+<p>Para o evento de interesse (<span class="math inline">\(C=1\)</span>):</p>
+<p><span class="math display">\[
+P(T\le t|C=1,x) = \frac{1-(1-p[1-\exp(-t)])^{\exp(0.5x)}}{1-(1-p)^{\exp(0.5x}}.
+\]</span></p>
+<p>Para o evento competitivo (<span class="math inline">\(C=2\)</span>):</p>
+<p><span class="math display">\[
+P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
+\]</span></p>
+<p>O parâmetro <span class="math inline">\(\gamma \in {0.5,-0.5,-1}\)</span> controla o efeito da covariável sobre o evento competitivo. Os autores variaram <span class="math inline">\(\gamma\)</span> para investigar situações em que a covariável possui efeitos semelhantes ou conflitantes entre as duas causas de falha.</p>
+</section>
+<section id="simulation-strategy3" class="slide level2" data-menu-title="Estratégia">
+<h2></h2>
+<p><span class="slide-title">Simulação</span></p>
+<p><span class="custom-subtitle2">Introdução da censura</span></p>
+<hr>
+<div class="body-text-s">
+<p>A censura aleatória foi gerada por <span class="math inline">\(U_i \sim Exp(\lambda)\)</span> com <span class="math inline">\(\lambda \in {0.2,0.25,0.5,1,2,4}\)</span></p>
+<p>O instante de entrada no estudo foi gerado por <span class="math inline">\(W_i \sim U(0,1)\)</span> e a censura administrativa foi definida como $d_i=d-W_i $ onde <span class="math inline">\(d \in {1,2,4,8}\)</span> representa a duração total do estudo.</p>
+<p>O tempo observado foi <span class="math display">\[ Y_i=\min(T_i,U_i,d_i)\]</span> Assim, a simulação permitiu avaliar simultaneamente o impacto de:</p>
+<ul>
+<li>duração do estudo;</li>
+<li>intensidade da censura;</li>
+<li>frequência do evento de interesse;</li>
+<li>efeito da covariável sobre o evento competitivo.</li>
+</ul>
+<p>No total foram avaliados <span class="math inline">\(4 \times 6 \times 3 \times 3 \times 2 = 432\)</span> cenários distintos.</p>
+</div>
+</section>
+<section id="cascade-data" class="slide level2" data-menu-title="Estudo CASCADE">
+<h2></h2>
+<p><span class="slide-title">Aplicação: Estudo CASCADE</span></p>
+<hr>
+<p>O estudo CASCADE avaliou mudanças no tratamento antirretroviral em indivíduos infectados pelo HIV.</p>
+<p><span class="sanchez-font">Eventos considerados</span></p>
+<ul>
+<li><strong>TI</strong>: interrupção do tratamento (<em>treatment interruption</em>);</li>
+<li><strong>NH</strong>: troca para um novo esquema terapêutico (<em>new HAART regimen</em>).</li>
+</ul>
+<p><span class="sanchez-font">Resumo da amostra</span></p>
+<ul>
+<li>Total de participantes: <strong>1551</strong>;</li>
+<li>Interrupção do tratamento (TI): <strong>299 (19,3%)</strong>;</li>
+<li>Troca para novo regime (NH): <strong>283 (18,2%)</strong>;</li>
+<li>Nenhum dos dois eventos: <strong>969 (62,5%)</strong>.</li>
+</ul>
+<p>Durante o acompanhamento ocorreram <strong>98 óbitos</strong>, sendo <strong>58 antes da ocorrência de TI ou NH</strong>. Para esses indivíduos, o acompanhamento foi censurado na data do óbito.</p>
+</section>
+<section id="cascade-cif" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Kaplan-Meier versus CIF</span></p>
+<hr>
+<div class="body-text-s">
+<p>As estimativas da incidência cumulativa foram obtidas utilizando:</p>
+<ul>
+<li>o estimador apropriado da CIF;</li>
+<li>o estimador ingênuo baseado em Kaplan-Meier.</li>
+</ul>
+<p><span class="sanchez-font">Incidência acumulada em 4 anos</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Evento</th>
+<th style="text-align: right;">CIF</th>
+<th style="text-align: right;">1 − KM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TI</td>
+<td style="text-align: right;">26,7%</td>
+<td style="text-align: right;">31,5%</td>
+</tr>
+<tr class="even">
+<td>NH</td>
+<td style="text-align: right;">25,0%</td>
+<td style="text-align: right;">29,5%</td>
+</tr>
+</tbody>
+</table>
+<p><span class="sanchez-font">Principais resultados</span></p>
+<ul>
+<li>O estimador baseado em Kaplan-Meier superestimou sistematicamente a incidência dos dois eventos;</li>
+<li>A diferença observada confirma a importância de considerar explicitamente os riscos competitivos;</li>
+<li>Apenas <strong>37,5%</strong> dos pacientes experimentaram um dos dois eventos durante o acompanhamento.</li>
+</ul>
+</div>
+</section>
+<section id="cascade-cif1" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Kaplan-Meier versus CIF</span></p>
+<hr>
+
+<img data-src="img/figura1.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="resultados-efeito-genero" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Efeito de Gênero em Interrupção ou Troca de Tratamento</span></p>
+<hr>
+<p>Abordaremos a análise do efeito de gênero na taxa de falha instantânea através de 3 métodos:</p>
+<ul>
+<li><p>Isolado (A): onde ajustamos um modelo para cada causa tendo gênero como covariável de interesse.</p></li>
+<li><p>Estratificado (B): onde ajustamos o modelo simultaneamente para ambos riscos usando o aumento de dados e depois estratificamos pela variável causa de falha.</p></li>
+<li><p>Causal (C): onde ajustamos o modelo simultaneamente para ambos riscos usando o aumento de dados e incluímos a causa de falha como covariável.</p></li>
+</ul>
+<p>Lembre que:</p>
+<ul>
+<li><p>As estimativas de (B) deveriam ser idênticas a de (A).</p></li>
+<li><p>O método (C) supõe taxas de falha proporcionais.</p></li>
+<li><p>Analisamos a interação da covariável com o tipo de falha, sabendo que um efeito comum da covariável entre os tipos de falha (interação não sig) nos garante maior eficácia.</p></li>
+</ul>
+</section>
+<section id="resultados-efeito-genero1" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Efeito de Gênero em Interrupção ou Troca de Tratamento</span></p>
+<hr>
+
+<img data-src="img/tabela1.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="resultados-efeito-genero2" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Efeito de Gênero em Interrupção ou Troca de Tratamento</span></p>
+<hr>
+<p>Os três modelos concluíram efeito significativo do gênero no tempo até a interrupção do tratamento, com o risco para mulheres sendo 1.7 vezes maior que o risco para homens. Mas não houve efeito significativa no tempo até a troca de tratamento.</p>
+<p>Como esperado, as estimativas do modelo isolado foram idênticas as estimativas do modelo estratificado (0.531).</p>
+<p>A interação entre gênero e causa é tida como significativa, uma vez que o efeito do gênero na interrupção do tratamento é diferente do efeito na troca de tratamento.</p>
+<p>O modelo causal não indicou diferença na taxa de falha basal para causas diferentes, nem apontou interação significativa entre gênero e causa. Um gráfico omitido pelos autores mostra as curvas de cada grupo cruzando, rejeitando a hipótese de taxas de falha proporcionais e portanto a eficácia deste modelo.</p>
+</section>
+<section id="resultados-efeito-genero3" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Efeito de Gênero em Interrupção ou Troca de Tratamento</span></p>
+<hr>
+<p>Um gráfico que mostre o efeito da covariável gênero para o risco do evento TI não servirá de muito. No cenário de riscos competitivos, a função taxa de falha e função distribuição acumulada não são relacionadas um a um, uma vez que a acumulada é uma função de todas as taxas de falhas de cada risco, e uma covariável pode afetar cada uma delas de forma diferente. Um aumento na acumulada pode vir de um efeito positivo para uma causa ou de um efeito negativo em uma causa concorrente.</p>
+<p>Simulamos a função distribuição acumulada para interrupção de tratamento, estimada pelo modelo (A), tomando valores diferentes para a interação entre gênero e mudança de tratamento (que em nosso caso é nula). Ao aumentarmos a interação, mais mulheres sofrem mudança de tratamento e portanto não podem sofrer o risco competindo de interrupção de tratamento. Para valores maiores as curvas chegam a cruzar, mesmo as mulheres tendo risco significativamente maior de interrupção de tratamento.</p>
+</section>
+<section id="resultados-efeito-genero4" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Efeito de Gênero em Interrupção ou Troca de Tratamento</span></p>
+<hr>
+
+<img data-src="img/figura2.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="simulation-results" class="slide level2" data-menu-title="Estudo de Simulação">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Estudo de Simulação</span></p>
+<hr>
+<div class="body-text-s">
+<p>O estudo de simulação avaliou o impacto de assumir censura administrativa quando, na realidade, a censura era informativa.</p>
+<p><span class="sanchez-font">Principais resultados</span></p>
+<ul>
+<li>O viés na estimativa do efeito da covariável permaneceu abaixo de <strong>20%</strong> em todos os cenários avaliados;</li>
+<li>A magnitude do viés não dependeu de um único fator, mas da combinação de diferentes características do estudo;</li>
+<li>Os maiores vieses ocorreram em cenários com:
+<ul>
+<li>alta taxa de censura;</li>
+<li>longo tempo de acompanhamento;</li>
+<li>elevada frequência do evento competitivo;</li>
+<li>forte efeito da covariável sobre o evento competitivo.</li>
+</ul></li>
+</ul>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Os cenários mais críticos apresentaram vieses entre −7,6% e 19,9%.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation-results1" class="slide level2" data-menu-title="Estudo de Simulação">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Estudo de Simulação</span></p>
+<hr>
+
+<img data-src="img/figura3.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="simulation-conclusion" class="slide level2" data-menu-title="Sensibilidade">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Impacto da Censura Informativa</span></p>
+<hr>
+<div class="body-text-s">
+<p>Quando a probabilidade acumulada de censura era moderada (&lt; 50%), os resultados mostraram boa robustez:</p>
+<ul>
+<li>Viés entre −3,2% e 6,4%;</li>
+<li>Probabilidade de cobertura próxima ao nível nominal;</li>
+<li>Pequena diferença entre os métodos avaliados.</li>
+</ul>
+<p><span class="sanchez-font">Conclusão</span></p>
+<p>A análise de sensibilidade indica que assumir censura administrativa produz resultados semelhantes aos obtidos com IPCW em muitos cenários práticos.</p>
+<p>Entretanto, diferenças relevantes podem surgir quando há:</p>
+<ul>
+<li>censura intensa;</li>
+<li>longo período de acompanhamento;</li>
+<li>forte associação entre covariáveis e eventos competitivos.</li>
+</ul>
+</div>
+</section>
+<section id="resultados-fine-gray" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Modelo Fine and Gray</span></p>
+<hr>
+<p>A modelagem para a incidência acumulada usando taxas de falha de subsdistribuição proposta por Fine and Gray pode ser realizada no R através do pacte cmprsk. Repetimos a análise do efeito de gênero, desta vez na incidência acumulada, das 3 formas discutidas anteriormente:</p>
+<ul>
+<li><p>Assumindo censura adminstrativa.</p></li>
+<li><p>Lidando com censura aleatória através da IPCW (inverse probability of censoring weighting).</p></li>
+<li><p>Otimizando as pesagens do IPCW de acordo com a data de início do tratamento.</p></li>
+</ul>
+</section>
+<section id="resultados-fine-gray1" class="slide level2" data-menu-title="Resultados">
+<h2></h2>
+<p><span class="slide-title">Resultados</span></p>
+<p><span class="custom-subtitle2">Modelo Fine and Gray</span></p>
+<hr>
+
+<img data-src="img/tabela2.png" style="width:90.0%" class="r-stretch"></section>
+<section id="conclusao1" class="slide level2" data-menu-title="Conclusão">
+<h2></h2>
+<p><span class="slide-title">Conclusão</span></p>
+<hr>
+<ul>
+<li><p>A análise de riscos competitivos deve se concentrar em quantidades <strong>identificáveis</strong>:</p>
+<ul>
+<li><em>Cause-Specific Hazard</em> (CSH);</li>
+<li><em>Cumulative Incidence Function</em> (CIF).</li>
+</ul></li>
+<li><p>A abordagem baseada em <strong>tempos latentes de falha</strong> depende de pressupostos não testáveis e apresenta problemas de identificabilidade.</p></li>
+<li><p>O estimador de <strong>Kaplan-Meier</strong> superestima a incidência de um evento na presença de riscos competitivos e não deve ser utilizado para esse propósito.</p></li>
+<li><p>O modelo de <strong>Cox</strong> permite avaliar o efeito das covariáveis sobre as <strong>hazards específicas por causa</strong>.</p></li>
+<li><p>O modelo de <strong>Fine &amp; Gray</strong> permite modelar diretamente a <strong>incidência cumulativa</strong>.</p></li>
+<li><p>O efeito de uma covariável sobre a hazard específica por causa pode ser diferente de seu efeito sobre a CIF.</p></li>
+</ul>
+</section>
+<section id="conclusao3" class="slide level2" data-menu-title="Conclusão">
+<h2></h2>
+<p><span class="slide-title">Conclusão</span></p>
+<hr>
+<ul>
+<li>A análise pode ser afetada por:
+<ul>
+<li>censura;</li>
+<li>covariáveis dependentes do tempo;</li>
+<li>causas de falha ausentes;</li>
+<li>truncamento à esquerda;</li>
+<li>violações da hipótese de riscos proporcionais.</li>
+</ul></li>
+<li>Os modelos semiparamétricos são amplamente utilizados por sua flexibilidade e facilidade de implementação.</li>
+</ul>
 
 </section>
     </div>

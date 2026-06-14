@@ -1,0 +1,48 @@
+---
+format: 
+  revealjs:
+    slide-number: true
+    code-link: true
+    highlight-style: a11y
+    chalkboard: true
+    # self-contained: true
+    # scrollable: true
+    theme: "bea_slide_theme.scss"
+---
+
+##  {#conclusao1 data-menu-title="Conclusão"}
+
+[Conclusão]{.slide-title}
+
+<hr>
+
+-   A análise de riscos competitivos deve se concentrar em quantidades **identificáveis**:
+
+    -   *Cause-Specific Hazard* (CSH);
+    -   *Cumulative Incidence Function* (CIF).
+
+-   A abordagem baseada em **tempos latentes de falha** depende de pressupostos não testáveis e apresenta problemas de identificabilidade.
+
+-   O estimador de **Kaplan-Meier** superestima a incidência de um evento na presença de riscos competitivos e não deve ser utilizado para esse propósito.
+
+-   O modelo de **Cox** permite avaliar o efeito das covariáveis sobre as **hazards específicas por causa**.
+
+-   O modelo de **Fine & Gray** permite modelar diretamente a **incidência cumulativa**.
+
+-   O efeito de uma covariável sobre a hazard específica por causa pode ser diferente de seu efeito sobre a CIF.
+
+------------------------------------------------------------------------
+
+##  {#conclusao3 data-menu-title="Conclusão"}
+
+[Conclusão]{.slide-title}
+
+<hr>
+
+-   A análise pode ser afetada por:
+    -   censura;
+    -   covariáveis dependentes do tempo;
+    -   causas de falha ausentes;
+    -   truncamento à esquerda;
+    -   violações da hipótese de riscos proporcionais.
+-   Os modelos semiparamétricos são amplamente utilizados por sua flexibilidade e facilidade de implementação.

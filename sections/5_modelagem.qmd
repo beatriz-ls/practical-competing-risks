@@ -1,9 +1,18 @@
 ---
-title: "5_modelagem"
-format: html
+format: 
+  revealjs:
+    slide-number: true
+    code-link: true
+    highlight-style: a11y
+    chalkboard: true
+    # self-contained: true
+    # scrollable: true
+    theme: "bea_slide_theme.scss"
 ---
 
-## Modelo de Cox
+## {#modelo-cox data-menu-title="Modelo de Cox"}
+
+[Modelo de Cox]{.slide-title}
 
 <hr>
 
@@ -11,69 +20,72 @@ O modelo de riscos proporcionais, proposto por Cox em 1972 como uma maneira de i
 
 $$ h(t|X) = h_0 (t)exp(X \beta) $$
 
-Onde:
-- $h_0 (t)$ é uma função taxa de falha basal.
-- $X$ é o vetor de covariáveis.
-- $\beta$ é um vetor de coeficientes de regressão para serem estimados.
+Onde: - $h_0 (t)$ é uma função taxa de falha basal. - $X$ é o vetor de covariáveis. - $\beta$ é um vetor de coeficientes de regressão para serem estimados.
 
-## Modelo de Cox
+## {#modelo-cox1 data-menu-title="Modelo de Cox"}
+
+[Modelo de Cox]{.slide-title}
 
 <hr>
+
 
 O modelo ganha o nome de riscos proporcionais uma vez que dados dois elementos distintos $(x_i,x_j)$, a razão das taxas de falhas de ambos é independente do tempo:
 
 $$ \frac{h(t|x_i)}{h(t|x_j)} = \frac{h_0 (t)exp(x_i \beta)}{h_0 (t)exp(x_j \beta)} = exp(x_i \beta - x_j \beta) $$
 
-## Modelando taxa de falhas para causas específicas
+## {#modelo-cox2 data-menu-title="Modelando taxa de falhas para causas específicas"}
+
+[Modelando taxa de falhas para causas específicas]{.slide-title}
 
 <hr>
+
 
 Para investigar como as covariáveis X podem afetar a taxa de falha instantânea devido a uma causa na presença de todas as outras, um método análogo ao de taxas de falha proporcionais de Cox foi proposto para o cenário de riscos competitivos:
 
 $$\lambda_j(t,X) = \lambda_{0j}(t)exp(\beta _j X)$$
 
-Na prática, esse modelo pode ser estimado tratando falhas de outras causas como censuras e ajustando um modelo Cox tradicional sem as fortes hipóteses discutidas antes, isto é, trabalhar isoladamente. 
+Na prática, esse modelo pode ser estimado tratando falhas de outras causas como censuras e ajustando um modelo Cox tradicional sem as fortes hipóteses discutidas antes, isto é, trabalhar isoladamente.
 
+## {#modelo-cox3 data-menu-title="Modelando taxa de falhas para causas específicas"}
 
-## Modelando taxa de falhas para causas específicas
+[Modelando taxa de falhas para causas específicas]{.slide-title}
 
 <hr>
 
-Para evitar esse trabalho isolado, foram desenvolvidos métodos de aumento de dados para modelar taxas de falha para todas as causas e testar a igualdade dos efeitos das covariáveis nos modelos de falhas diferentes. 
+Para evitar esse trabalho isolado, foram desenvolvidos métodos de aumento de dados para modelar taxas de falha para todas as causas e testar a igualdade dos efeitos das covariáveis nos modelos de falhas diferentes.
 
-Para isso, devemos trabalhar com os dados em um "formato longo"
-  - Cada indivíduo deve ter k indicadoras de causa.
-  - Cada covariável de interesse deve gerar k subvariáveis específicas a causa, de tal forma que no caso de j-ésima falha, a j-ésima subcovariável valha o valor original e todas as outras valham zero.
-  
-## Modelando taxa de falhas para causas específicas
+Para isso, devemos trabalhar com os dados em um "formato longo" - Cada indivíduo deve ter k indicadoras de causa. - Cada covariável de interesse deve gerar k subvariáveis específicas a causa, de tal forma que no caso de j-ésima falha, a j-ésima subcovariável valha o valor original e todas as outras valham zero.
+
+## {#modelo-cox4 data-menu-title="Modelando taxa de falhas para causas específicas"}
+
+[Modelando taxa de falhas para causas específicas]{.slide-title}
 
 <hr>
 
 Feito isso, restam duas abordagens:
 
-  - Estratificar por causa de falha: este modelo gera estimativas idênticas a modelagem isolada.
-  - Incluir a causa de falha (C) como covariável: este modelo assume taxas de falha proporcionais. 
-  
-Nas duas abordagens, o efeito de uma covariável no tempo de falha em cada causa pode ser estimado incluindo no modelo suas subcovariáveis correspondentes. 
+-   Estratificar por causa de falha: este modelo gera estimativas idênticas a modelagem isolada.
+-   Incluir a causa de falha (C) como covariável: este modelo assume taxas de falha proporcionais.
 
-Também é possível incluir no modelo termos de interação da covariável com a causa de falha, para testar se o efeito da covariável é comum entre as causas. No caso afirmativo, a eficiência do modelo aumenta. 
+Nas duas abordagens, o efeito de uma covariável no tempo de falha em cada causa pode ser estimado incluindo no modelo suas subcovariáveis correspondentes.
+
+Também é possível incluir no modelo termos de interação da covariável com a causa de falha, para testar se o efeito da covariável é comum entre as causas. No caso afirmativo, a eficiência do modelo aumenta.
 
 ## Modelo Fine and Gray
 
-<hr> 
+<hr>
 
 Modelar apenas as taxas de falhas instantaneas não quantifica o ganho ou perda geral que uma covariável imbui no tempo de falha, logo modelar a incidencia acumulativa pode tornar a interpretação mais relevante. Um modelo deste tipo foi sugerido por Fine and Gray.
 
 Defina a taxa de falha de subdistribuição (subdistribution hazard) como:
 
-$$ \lambda _j ^{sub} (t,x) = lim_{h \rightarrow 0} \frac{1}{h} P[t \leq T < t + h, C = j | T \geq t \cup (T \leq t \cap C \neq j),X] $$ 
-$$ = \frac{-d}{dt} log[1 - F_j(t,X)]$$ 
+$$ \lambda _j ^{sub} (t,x) = lim_{h \rightarrow 0} \frac{1}{h} P[t \leq T < t + h, C = j | T \geq t \cup (T \leq t \cap C \neq j),X] $$ $$ = \frac{-d}{dt} log[1 - F_j(t,X)]$$
 
-Note que esse não é a taxa da falha natural pois inclui no tempo t sujeitos que falharam por outras causas antes de t e não estão mais em risco. 
+Note que esse não é a taxa da falha natural pois inclui no tempo t sujeitos que falharam por outras causas antes de t e não estão mais em risco.
 
 ## Modelo Fine and Gray
 
-<hr> 
+<hr>
 
 Com essa taxa de falha, foi proposto um modelo semiparamétrico de taxa de falha proporcional:
 

@@ -10,15 +10,72 @@ format:
     theme: "bea_slide_theme.scss"
 ---
 
+## {#cascade-data data-menu-title="Estudo CASCADE"}
 
-## BIA PARTE 1
+[Aplicação: Estudo CASCADE]{.slide-title}
 
+<hr>
 
+O estudo CASCADE avaliou mudanças no tratamento antirretroviral em indivíduos infectados pelo HIV.
 
+[Eventos considerados]{.sanchez-font}
 
+* **TI**: interrupção do tratamento (*treatment interruption*);
+* **NH**: troca para um novo esquema terapêutico (*new HAART regimen*).
 
+[Resumo da amostra]{.sanchez-font}
 
-## Efeito de Gênero em Interrupção ou Troca de Tratamento
+* Total de participantes: **1551**;
+* Interrupção do tratamento (TI): **299 (19,3%)**;
+* Troca para novo regime (NH): **283 (18,2%)**;
+* Nenhum dos dois eventos: **969 (62,5%)**.
+
+Durante o acompanhamento ocorreram **98 óbitos**, sendo **58 antes da ocorrência de TI ou NH**. Para esses indivíduos, o acompanhamento foi censurado na data do óbito.
+
+## {#cascade-cif data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Kaplan-Meier versus CIF]{.custom-subtitle2}
+
+<hr>
+
+::: body-text-s
+As estimativas da incidência cumulativa foram obtidas utilizando:
+
+* o estimador apropriado da CIF;
+* o estimador ingênuo baseado em Kaplan-Meier.
+
+[Incidência acumulada em 4 anos]{.sanchez-font}
+
+| Evento |   CIF | 1 − KM |
+| ------ | ----: | -----: |
+| TI     | 26,7% |  31,5% |
+| NH     | 25,0% |  29,5% |
+
+[Principais resultados]{.sanchez-font}
+
+* O estimador baseado em Kaplan-Meier superestimou sistematicamente a incidência dos dois eventos;
+* A diferença observada confirma a importância de considerar explicitamente os riscos competitivos;
+* Apenas **37,5%** dos pacientes experimentaram um dos dois eventos durante o acompanhamento.
+
+:::
+
+## {#cascade-cif1 data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Kaplan-Meier versus CIF]{.custom-subtitle2}
+
+<hr>
+
+![](img/figura1.png){fig-align="center"}
+
+## {#resultados-efeito-genero data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Efeito de Gênero em Interrupção ou Troca de Tratamento]{.custom-subtitle2}
 
 <hr>
 
@@ -38,15 +95,24 @@ Lembre que:
 
 - Analisamos a interação da covariável com o tipo de falha, sabendo que um efeito comum da covariável entre os tipos de falha (interação não sig) nos garante maior eficácia.
 
-## Efeito de Gênero em Interrupção ou Troca de Tratamento
+## {#resultados-efeito-genero1 data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Efeito de Gênero em Interrupção ou Troca de Tratamento]{.custom-subtitle2}
 
 <hr>
 
-::: {#fig-table}
-![](tabela1.png){fig-align="center"}
-## Efeito de Gênero em Interrupção ou Troca de Tratamento
+![](img/tabela1.png){fig-align="center"}
+
+## {#resultados-efeito-genero2 data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Efeito de Gênero em Interrupção ou Troca de Tratamento]{.custom-subtitle2}
 
 <hr>
+
 
 Os três modelos concluíram efeito significativo do gênero no tempo até a interrupção do tratamento, com o risco para mulheres sendo 1.7 vezes maior que o risco para homens. Mas não houve efeito significativa no tempo até a troca de tratamento.
 
@@ -56,28 +122,105 @@ A interação entre gênero e causa é tida como significativa, uma vez que o ef
 
 O modelo causal não indicou diferença na taxa de falha basal para causas diferentes, nem apontou interação significativa entre gênero e causa. Um gráfico omitido pelos autores mostra as curvas de cada grupo cruzando, rejeitando a hipótese de taxas de falha proporcionais e portanto a eficácia deste modelo.
 
-## Efeito de Gênero em Interrupção ou Troca de Tratamento
+## {#resultados-efeito-genero3 data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Efeito de Gênero em Interrupção ou Troca de Tratamento]{.custom-subtitle2}
 
 <hr>
+
 
 Um gráfico que mostre o efeito da covariável gênero para o risco do evento TI não servirá de muito. No cenário de riscos competitivos, a função taxa de falha e função distribuição acumulada não são relacionadas um a um, uma vez que a acumulada é uma função de todas as taxas de falhas de cada risco, e uma covariável pode afetar cada uma delas de forma diferente. Um aumento na acumulada pode vir de um efeito positivo para uma causa ou de um efeito negativo em uma causa concorrente.
 
 Simulamos a função distribuição acumulada para interrupção de tratamento, estimada pelo modelo (A), tomando valores diferentes para a interação entre gênero e mudança de tratamento (que em nosso caso é nula). Ao aumentarmos a interação, mais mulheres sofrem mudança de tratamento e portanto não podem sofrer o risco competindo de interrupção de tratamento. Para valores maiores as curvas chegam a cruzar, mesmo as mulheres tendo risco significativamente maior de interrupção de tratamento. 
 
-## Efeito de Gênero em Interrupção ou Troca de Tratamento
+## {#resultados-efeito-genero4 data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Efeito de Gênero em Interrupção ou Troca de Tratamento]{.custom-subtitle2}
 
 <hr>
 
-::: {#fig-img}
-![](figura2.png){fig-align="center"}
 
+![](img/figura2.png){fig-align="center"}
 
-## BIA PARTE 2
+## {#simulation-results data-menu-title="Estudo de Simulação"}
 
+[Resultados]{.slide-title}
 
-## Fine and Gray Software
+[Estudo de Simulação]{.custom-subtitle2}
 
 <hr>
+
+::: body-text-s
+
+O estudo de simulação avaliou o impacto de assumir censura administrativa quando, na realidade, a censura era informativa.
+
+[Principais resultados]{.sanchez-font}
+
+* O viés na estimativa do efeito da covariável permaneceu abaixo de **20%** em todos os cenários avaliados;
+* A magnitude do viés não dependeu de um único fator, mas da combinação de diferentes características do estudo;
+* Os maiores vieses ocorreram em cenários com:
+  - alta taxa de censura;
+  - longo tempo de acompanhamento;
+  - elevada frequência do evento competitivo;
+  - forte efeito da covariável sobre o evento competitivo.
+
+::: {.callout-important}
+Os cenários mais críticos apresentaram vieses entre −7,6% e 19,9%.
+:::
+
+:::
+
+
+## {#simulation-results1 data-menu-title="Estudo de Simulação"}
+
+[Resultados]{.slide-title}
+
+[Estudo de Simulação]{.custom-subtitle2}
+
+<hr>
+
+![](img/figura3.png){fig-align="center"}
+
+## {#simulation-conclusion data-menu-title="Sensibilidade"}
+
+[Resultados]{.slide-title}
+
+[Impacto da Censura Informativa]{.custom-subtitle2}
+
+<hr>
+
+::: body-text-s
+
+Quando a probabilidade acumulada de censura era moderada (< 50%), os resultados mostraram boa robustez:
+
+* Viés entre −3,2% e 6,4%;
+* Probabilidade de cobertura próxima ao nível nominal;
+* Pequena diferença entre os métodos avaliados.
+
+[Conclusão]{.sanchez-font}
+
+A análise de sensibilidade indica que assumir censura administrativa produz resultados semelhantes aos obtidos com IPCW em muitos cenários práticos.
+
+Entretanto, diferenças relevantes podem surgir quando há:
+
+* censura intensa;
+* longo período de acompanhamento;
+* forte associação entre covariáveis e eventos competitivos.
+
+:::
+
+## {#resultados-fine-gray data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Modelo Fine and Gray]{.custom-subtitle2}
+
+<hr>
+
 
 A modelagem para a incidência acumulada usando taxas de falha de subsdistribuição proposta por Fine and Gray pode ser realizada no R através do pacte cmprsk. Repetimos a análise do efeito de gênero, desta vez na incidência acumulada, das 3 formas discutidas anteriormente:
 
@@ -87,12 +230,15 @@ A modelagem para a incidência acumulada usando taxas de falha de subsdistribui�
 
 - Otimizando as pesagens do IPCW de acordo com a data de início do tratamento. 
 
-## Fine and Gray Software
+## {#resultados-fine-gray1 data-menu-title="Resultados"}
+
+[Resultados]{.slide-title}
+
+[Modelo Fine and Gray]{.custom-subtitle2}
 
 <hr>
 
-::: {#fig-table}
-![](tabela2.png){fig-align="center"}
+![](img/tabela2.png){width="90%"}
 
 
 
