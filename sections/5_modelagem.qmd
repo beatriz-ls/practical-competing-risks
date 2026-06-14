@@ -71,9 +71,12 @@ Nas duas abordagens, o efeito de uma covariável no tempo de falha em cada causa
 
 Também é possível incluir no modelo termos de interação da covariável com a causa de falha, para testar se o efeito da covariável é comum entre as causas. No caso afirmativo, a eficiência do modelo aumenta.
 
-## Modelo Fine and Gray
+## {#modelo-fine-gray data-menu-title="Modelo Fine and Gray"}
+
+[Modelo Fine and Gray]{.slide-title}
 
 <hr>
+
 
 Modelar apenas as taxas de falhas instantaneas não quantifica o ganho ou perda geral que uma covariável imbui no tempo de falha, logo modelar a incidencia acumulativa pode tornar a interpretação mais relevante. Um modelo deste tipo foi sugerido por Fine and Gray.
 
@@ -83,7 +86,9 @@ $$ \lambda _j ^{sub} (t,x) = lim_{h \rightarrow 0} \frac{1}{h} P[t \leq T < t + 
 
 Note que esse não é a taxa da falha natural pois inclui no tempo t sujeitos que falharam por outras causas antes de t e não estão mais em risco.
 
-## Modelo Fine and Gray
+## {#modelo-fine-gray1 data-menu-title="Modelo Fine and Gray"}
+
+[Modelo Fine and Gray]{.slide-title}
 
 <hr>
 

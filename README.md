@@ -1,1 +1,1 @@
-![](img/capa.png)](https://beatriz-ls.github.io/practical-competing-risks/title-slide)
+[![](img/capa.png)](https://beatriz-ls.github.io/practical-competing-risks/title-slide)

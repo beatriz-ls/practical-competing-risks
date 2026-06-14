@@ -1,0 +1,24 @@
+---
+format:
+  revealjs:
+    pdf-max-pages-per-slide: 1
+    pdf-separate-fragments: false
+    slide-number: true
+    show-slide-number: print
+    theme: "bea_slide_theme.scss"
+    menu:
+      side: right
+      width: wide
+---
+
+##  {#references data-menu-title="Referências"}
+
+[Referências]{.slide-title}
+
+<hr>
+
+-   BAKOYANNIS, Giorgos; TOULOUMI, Giota. *Practical methods for competing risks data: A review*. Statistical Methods in Medical Research, v. 21, n. 3, p. 257–272, 2012. DOI: 10.1177/0962280210394479.
+
+-   COLOSIMO, Enrico Antônio; GIOLO, Suely Ruiz. *Análise de sobrevivência aplicada*. 2. ed. São Paulo: Blucher, 2024.
+
+-   PUTTER, Hein; FIOCCO, Marta; GESKUS, Ronald B. *Tutorial in biostatistics: Competing risks and multi-state models*. Statistics in Medicine, v. 26, n. 11, p. 2389–2430, 2007. DOI: 10.1002/sim.2712.

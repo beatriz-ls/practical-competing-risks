@@ -1,6 +1,8 @@
 ---
 format:
   revealjs:
+    pdf-max-pages-per-slide: 1
+    pdf-separate-fragments: false
     slide-number: true
     show-slide-number: print
     theme: "bea_slide_theme.scss"
@@ -64,3 +66,7 @@ Slides disponíveis em [GitHub](https://github.com/beatriz-ls/practical-competin
 ------------------------------------------------------------------------
 
 {{< include sections/8_conclusao.qmd >}}
+
+------------------------------------------------------------------------
+
+{{< include sections/9_referencias.qmd >}}

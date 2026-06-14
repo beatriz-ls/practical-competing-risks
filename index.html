@@ -6,7 +6,7 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-1fa1d8026083a9bddc52b4aafc7f818e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.42">
 
   <title>index</title>
@@ -32,8 +32,6 @@
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -437,16 +435,18 @@ F(t)=P(T\le t)=1-S(t),
 <p>Nas duas abordagens, o efeito de uma covariável no tempo de falha em cada causa pode ser estimado incluindo no modelo suas subcovariáveis correspondentes.</p>
 <p>Também é possível incluir no modelo termos de interação da covariável com a causa de falha, para testar se o efeito da covariável é comum entre as causas. No caso afirmativo, a eficiência do modelo aumenta.</p>
 </section>
-<section id="modelo-fine-and-gray" class="slide level2">
-<h2>Modelo Fine and Gray</h2>
+<section id="modelo-fine-gray" class="slide level2" data-menu-title="Modelo Fine and Gray">
+<h2></h2>
+<p><span class="slide-title">Modelo Fine and Gray</span></p>
 <hr>
 <p>Modelar apenas as taxas de falhas instantaneas não quantifica o ganho ou perda geral que uma covariável imbui no tempo de falha, logo modelar a incidencia acumulativa pode tornar a interpretação mais relevante. Um modelo deste tipo foi sugerido por Fine and Gray.</p>
 <p>Defina a taxa de falha de subdistribuição (subdistribution hazard) como:</p>
 <p><span class="math display">\[ \lambda _j ^{sub} (t,x) = lim_{h \rightarrow 0} \frac{1}{h} P[t \leq T &lt; t + h, C = j | T \geq t \cup (T \leq t \cap C \neq j),X] \]</span> <span class="math display">\[ = \frac{-d}{dt} log[1 - F_j(t,X)]\]</span></p>
 <p>Note que esse não é a taxa da falha natural pois inclui no tempo t sujeitos que falharam por outras causas antes de t e não estão mais em risco.</p>
 </section>
-<section id="modelo-fine-and-gray-1" class="slide level2">
-<h2>Modelo Fine and Gray</h2>
+<section id="modelo-fine-gray1" class="slide level2" data-menu-title="Modelo Fine and Gray">
+<h2></h2>
+<p><span class="slide-title">Modelo Fine and Gray</span></p>
 <hr>
 <p>Com essa taxa de falha, foi proposto um modelo semiparamétrico de taxa de falha proporcional:</p>
 <p><span class="math display">\[ \lambda _j ^{sub} (t,x) = \lambda _{0j} ^{sub} (t,x) exp(\beta _j X) \]</span></p>
@@ -626,7 +626,7 @@ P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
 <h2></h2>
 <p><span class="slide-title">Aplicação: Estudo CASCADE</span></p>
 <hr>
-<p>O estudo CASCADE avaliou mudanças no tratamento antirretroviral em indivíduos infectados pelo HIV.</p>
+<p>O estudo <em>Concerted Action on SeroConversion to AIDS and Death in Europe (CASCADE)</em> avaliou mudanças no tratamento antirretroviral em indivíduos infectados pelo HIV.</p>
 <p><span class="sanchez-font">Eventos considerados</span></p>
 <ul>
 <li><strong>TI</strong>: interrupção do tratamento (<em>treatment interruption</em>);</li>
@@ -853,6 +853,16 @@ P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
 </ul></li>
 <li>Os modelos semiparamétricos são amplamente utilizados por sua flexibilidade e facilidade de implementação.</li>
 </ul>
+</section>
+<section id="references" class="slide level2" data-menu-title="Referências">
+<h2></h2>
+<p><span class="slide-title">Referências</span></p>
+<hr>
+<ul>
+<li><p>BAKOYANNIS, Giorgos; TOULOUMI, Giota. <em>Practical methods for competing risks data: A review</em>. Statistical Methods in Medical Research, v. 21, n.&nbsp;3, p.&nbsp;257–272, 2012. DOI: 10.1177/0962280210394479.</p></li>
+<li><p>COLOSIMO, Enrico Antônio; GIOLO, Suely Ruiz. <em>Análise de sobrevivência aplicada</em>. 2. ed.&nbsp;São Paulo: Blucher, 2024.</p></li>
+<li><p>PUTTER, Hein; FIOCCO, Marta; GESKUS, Ronald B. <em>Tutorial in biostatistics: Competing risks and multi-state models</em>. Statistics in Medicine, v. 26, n.&nbsp;11, p.&nbsp;2389–2430, 2007. DOI: 10.1002/sim.2712.</p></li>
+</ul>
 
 </section>
     </div>
@@ -869,7 +879,6 @@ P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
   <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -891,8 +900,8 @@ P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":true},
+'pdfMaxPagesPerSlide': 1,
+'menu': {"side":"right","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"width":"wide"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -916,7 +925,7 @@ P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
         slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
+        showSlideNumber: 'print',
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
@@ -1063,7 +1072,7 @@ P(T\le t|C=2,x) = 1-\exp[-\exp(\gamma x)t].
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
 
           RevealMath,
           RevealNotes,

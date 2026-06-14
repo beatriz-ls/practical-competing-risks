@@ -1,13 +1,14 @@
 ---
-format: 
+format:
   revealjs:
+    pdf-max-pages-per-slide: 1
+    pdf-separate-fragments: false
     slide-number: true
-    code-link: true
-    highlight-style: a11y
-    chalkboard: true
-    # self-contained: true
-    # scrollable: true
+    show-slide-number: print
     theme: "bea_slide_theme.scss"
+    menu:
+      side: right
+      width: wide
 ---
 
 ##  {#conclusao1 data-menu-title="Conclusão"}

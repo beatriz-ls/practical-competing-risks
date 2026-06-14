@@ -1,13 +1,14 @@
 ---
-format: 
+format:
   revealjs:
+    pdf-max-pages-per-slide: 1
+    pdf-separate-fragments: false
     slide-number: true
-    code-link: true
-    highlight-style: a11y
-    chalkboard: true
-    # self-contained: true
-    # scrollable: true
+    show-slide-number: print
     theme: "bea_slide_theme.scss"
+    menu:
+      side: right
+      width: wide
 ---
 
 ## {#cascade-data data-menu-title="Estudo CASCADE"}
@@ -16,7 +17,7 @@ format:
 
 <hr>
 
-O estudo CASCADE avaliou mudanças no tratamento antirretroviral em indivíduos infectados pelo HIV.
+O estudo *Concerted Action on SeroConversion to AIDS and Death in Europe (CASCADE)* avaliou mudanças no tratamento antirretroviral em indivíduos infectados pelo HIV.
 
 [Eventos considerados]{.sanchez-font}
 
