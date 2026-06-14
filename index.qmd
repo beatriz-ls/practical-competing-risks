@@ -11,8 +11,7 @@ format:
 
 ##  {#title-slide data-menu-title="Title Slide" background="#9FB2AC"}
 
-[Practical methods for competing
-risks data]{.custom-title}
+[Practical methods for competing risks data]{.custom-title}
 
 [*A review*]{.custom-subtitle}
 
@@ -20,8 +19,7 @@ risks data]{.custom-title}
 
 ::::: columns
 ::: {.column width="50%"}
-[Beatriz Lima Silveira]{.custom-subtitle3}<br>
-[Felipe Mancini Ramos]{.custom-subtitle3}<br>
+[Beatriz Lima Silveira]{.custom-subtitle3}<br> [Felipe Mancini Ramos]{.custom-subtitle3}<br>
 :::
 
 ::: {.column width="50%"}
@@ -66,5 +64,3 @@ Slides disponíveis em [GitHub](https://github.com/beatriz-ls/practical-competin
 ------------------------------------------------------------------------
 
 {{< include sections/8_conclusao.qmd >}}
-
-
